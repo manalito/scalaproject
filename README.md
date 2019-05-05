@@ -10,7 +10,7 @@
 
 ###Introduction:
 
-Ce repository présente le projet du cours Scala, au sein de la Haute Eole d'Ingénierie et de Gestion du canton de Vaud (HEIG-VD).
+Ce repository présente le projet du cours Scala, au sein de la Haute Ecole d'Ingénierie et de Gestion du canton de Vaud (HEIG-VD).
 
 ### Membres du groupe
 
@@ -22,7 +22,7 @@ Ce repository présente le projet du cours Scala, au sein de la Haute Eole d'Ing
 
 Notre idée consiste en une **web app pour gérer ses séries/films préferées** (favoris/vu/non vu/…).
 
-Un utilisateur s'identifie à l'application et peut sélectionner parmi une liste de séries et de films ceux qu'il préfèrent, les ajouter à ses favoris... L'utilisateur devrait pouvoir effectuer diverses actions:
+Un utilisateur s'identifie à l'application et peut sélectionner parmi une liste de séries et de films ceux qu'il préfèrent, les ajouter à ses favoris... L'utilisateur devrait pouvoir effectuer actions suivantes:
 
 1. S'inscrire à l'application
 2. Se connecter à l'application
@@ -45,22 +45,19 @@ Les élements ci-dessous sont à prévoir:
 
 Voic ci dessous les différents framework, outils et langage de programmation envisagés pour réaliser notre projet:
 
-- **Backend**: *Slick, ScalaPlay*   @romain ?
+- **Backend**: *Slick, ScalaPlay*
 - **Frontend** : *Javascript*, *HTML/CSS* et eventuellement *ScalaJS*
 -  **Type de base de donnée**: 
 	- Base de donnée relationnelle: *MySQL*
 	utilisée pour stocker les informations des utilisateurs et leurs médias sélectionnés avec leurs états (vu, non vu, favoris,...)
 - **Autres Framework/outils:** 
 	- *Omdb Api*: api nous permettant de récupérer toutes les informations nécessaires sur les médias recherchés.
-	
-	Tout éventuel autre outil et framework que vous comptez utiliser et pourquoi (Lucene pour de l'indexation par exemple) @romain?
+
 
 ### Répartition des tâches
 
-- Gallay Romain -> Backend
+- Gallay Romain, Siu Aurélien -> Backend
 
 -  Koubaa Walid -> Frontend
-
--  Siu Aurélien -> Scala Play
 
   Bien évidemment des interactions entre les différents membres du groupe seront nécessaires pour lier les differentes parties.
