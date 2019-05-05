@@ -46,7 +46,7 @@ Les élements ci-dessous sont à prévoir:
 Voic ci dessous les différents framework, outils et langage de programmation envisagés pour réaliser notre projet:
 
 - **Backend**: *Slick, ScalaPlay*
-- **Frontend** : *Javascript*, *HTML/CSS* et eventuellement *ScalaJS*
+- **Frontend** : *ReactJS, Javascript, HTML/CSS*
 -  **Type de base de donnée**: 
 	- Base de donnée relationnelle: *MySQL*
 	utilisée pour stocker les informations des utilisateurs et leurs médias sélectionnés avec leurs états (vu, non vu, favoris,...)
