@@ -8,7 +8,7 @@
 >
 > Date: 09/06/19
 
-###Introduction:
+### Introduction:
 
 Ce repository présente le projet du cours Scala, au sein de la Haute Ecole d'Ingénierie et de Gestion du canton de Vaud (HEIG-VD).
 
@@ -18,7 +18,7 @@ Ce repository présente le projet du cours Scala, au sein de la Haute Ecole d'In
 - Koubaa Walid
 - Siu Aurélien
 
-###Description du projet
+### Description du projet
 
 Notre idée consiste en une **web app pour gérer ses séries/films préferées** (favoris/vu/non vu/…).
 
