@@ -13,12 +13,5 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET /films                          controllers.FilmsController.films
-
-GET /series                         controllers.SeriesController.seriesHeader
-
-GET /statistique                    controllers.AsyncController.message
-
-GET /profil                         controllers.AsyncController.message
-
-GET /login                          controllers.AsyncController.message
+      # REST API endpoints
+GET /users                   controllers.UsersController.getUsers

@@ -1,25 +1,26 @@
 @*
 * This template takes a single argument, a String containing a name to display.
 *@
-@(name: String)
+@(message: String)
 
 @*
 * Call the `main` template with two arguments. The first argument is a `String` with the
 * title of the page, the second argument is an `Html` object containing the body of the
 * page.
 *@
-@main("The first title of my first page!") {
+@main("WaliDB !") {
     <section id="top">
         <div class="wrapper">
-            <h1>The first title of my first page!</h1>
+            <h1>WaliDB !</h1>
         </div>
     </section>
 
     <div id="content" class="wrapper drop">
         <article>
             <p>
-                Yay! My name is @name and this is my first Framework's page ever!
+                Let's build an amazing web app
             </p>
+            <p>@message</p>
             <p>
                 I'm so happy..., let us count until 10:
         <ul>
