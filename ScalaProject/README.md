@@ -5,11 +5,9 @@
 	$ sudo mysql
 	# ou mysql -u root -p
 	
-	mysql> CREATE USER scala;
-	
 	mysql> CREATE DATABASE scala_project_sql
 	
-	mysql> GRANT ALL ON scala_project_sql.* TO 'scala'@'localhost';
+	mysql> GRANT ALL ON scala_project_sql.* TO 'scala'@'localhost' IDENTIFIED BY 'alacS2019+';
 	
 	mysql> exit;
 	
