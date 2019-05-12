@@ -1,7 +1,7 @@
 @*
 * This template takes a single argument, a String containing a name to display.
 *@
-@(message: String)
+@(message: String, users: Seq[User])
 
 @*
 * Call the `main` template with two arguments. The first argument is a `String` with the
@@ -9,7 +9,13 @@
 * page.
 *@
 @main("WaliDB !") {
-    <section id="top">
+
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+    @own_welcome(message, users)
+    <!--<section id="top">
         <div class="wrapper">
             <h1>WaliDB !</h1>
         </div>
@@ -34,5 +40,5 @@
             </p>
         </article>
 
-    </div>
+    </div> -->
 }

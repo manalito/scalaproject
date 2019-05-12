@@ -13,5 +13,13 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-      # REST API endpoints
-GET /users                   controllers.UsersController.getUsers
+# REST API endpoints
+GET     /users                      controllers.UsersController.getUsers
+POST    /users                      controllers.UsersController.createUser
+GET     /users/:id                  controllers.UsersController.getUser(id: Long)
+PUT     /users/:id                  controllers.UsersController.updateUser(id: Long)
+DELETE  /users/:id                  controllers.UsersController.deleteUser(id: Long)
+GET     /medias                     controllers.MediasController.getMedias
+
+# Play's JavaScript routes manager
+GET     /javascriptRoutes           controllers.HomeController.javascriptRoutes
