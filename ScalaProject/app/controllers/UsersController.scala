@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 @Singleton
 class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) extends AbstractController(cc) {
 
-   // Refer to the StudentsController class in order to have more explanations.
+   // Refer to the UsersController class in order to have more explanations.
    implicit val userToJson: Writes[User] = (
       (JsPath \ "id").write[Option[Long]] and
          (JsPath \ "username").write[String] and

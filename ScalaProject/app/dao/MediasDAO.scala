@@ -7,13 +7,13 @@ import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
-// We use a trait component here in order to share the StudentsTable class with other DAO, thanks to the inheritance.
+// We use a trait component here in order to share the MediasTable class with other DAO, thanks to the inheritance.
 trait MediasComponent {
   self: HasDatabaseConfigProvider[JdbcProfile] =>
 
   import profile.api._
 
-  // This class convert the database's students table in a object-oriented entity: the Student model.
+  // This class convert the database's medias table in a object-oriented entity: the Media model.
   class MediasTable(tag: Tag) extends Table[Media](tag, "Media") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc) // Primary key, auto-incremented
     def ombdId = column[String]("omdb_id")
@@ -28,7 +28,7 @@ trait MediasComponent {
 // driver. The class extends the students' query table and loads the JDBC profile configured in the application's
 // configuration file.
 @Singleton
-class StudentsDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends MediasComponent with HasDatabaseConfigProvider[JdbcProfile] {
+class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends MediasComponent with HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
 
   // Get the object-oriented list of medias directly from the query table.
