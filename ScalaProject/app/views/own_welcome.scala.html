@@ -1,0 +1,59 @@
+@(message: String, users: Seq[User], style: String = "scala")
+
+@defining(play.core.PlayVersion.current) { version =>
+
+<section id="top">
+  <div class="wrapper">
+    <h1><a href="https://playframework.com/documentation/@version/Home">@message</a></h1>
+  </div>
+</section>
+
+<div id="content" class="wrapper doc">
+<article>
+
+    <h1>Utilisateurs</h1>
+    <table class="things-table" id="table-students">
+        <tr>
+            <th>Pseudo</th>
+            <th>Durée de films vus</th>
+            <th>Durée de séries vues</th>
+            <th>Durée totale</th>
+            <th></th>
+        </tr>
+        @for(user <- users) {
+            <tr id="row-user-@user.id" studentId="@user.id">
+                <td class="user-username">@user.username</td>
+                <td class="user-time_movies">@user.time_movies
+                <td class="user-time_series">@user.time_movies</td>
+                <td class="user-time_total">@user.time_movies</td>
+                <td><button onclick="deleteUser(@user.id, '@user.username')">Supprimer</button></td>
+            </tr>
+        }
+    </table>
+
+ 
+</article>
+
+<aside>
+  <h3>Browse</h3>
+  <ul>
+    <li><a href="https://playframework.com/documentation/@version">Documentation</a></li>
+    <li><a href="https://playframework.com/documentation/@version/api/@style/index.html">Browse the @{style.capitalize} API</a></li>
+  </ul>
+  <h3>Start here</h3>
+  <ul>
+    <li><a href="https://playframework.com/documentation/@version/PlayConsole">Using the Play console</a></li>
+    <li><a href="https://playframework.com/documentation/@version/IDE">Setting up your preferred IDE</a></li>
+    <li><a href="https://playframework.com/download#examples">Example Projects</a>
+  </ul>
+  <h3>Help here</h3>
+  <ul>
+    <li><a href="https://stackoverflow.com/questions/tagged/playframework">Stack Overflow</a></li>
+    <li><a href="http://groups.google.com/group/play-framework">Mailing List</a></li>
+    <li><a href="https://gitter.im/playframework/playframework">Gitter Channel</a></li>
+  </ul>
+
+</aside>
+
+</div>
+}
