@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    mysql:
+        image: mysql:5.7
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - "6033:3306"
+        volumes:
+            - ./script.sql:/docker-entrypoint-initdb.d/dump.sql
+        environment:
+            MYSQL_DATABASE: 'scala_project_sql'
+            MYSQL_USER: 'scala'
+            MYSQL_PASSWORD: 'alacS2019+'
+            MYSQL_ROOT_PASSWORD: 'toor2019+'
+
+        restart: always
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.6
+        environment:
+            - PMA_HOST=mysql
+        restart: always
+        ports:
+            - 4242:80

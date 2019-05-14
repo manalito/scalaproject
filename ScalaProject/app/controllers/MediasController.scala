@@ -35,9 +35,9 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO)
 
   def createMedia = Action.async(validateJson[Media]) { request =>
     val media = request.body
-    val createdCourse = mediasDAO.insert(media)
+    val createdMedia = mediasDAO.insert(media)
 
-    createdCourse.map(c =>
+    createdMedia.map(c =>
       Ok(
         Json.obj(
           "status" -> "OK",
