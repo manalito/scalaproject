@@ -2,8 +2,10 @@ package controllers
 
 import dao.UsersDAO
 import javax.inject._
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.routing.JavaScriptReverseRouter
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
@@ -15,17 +17,6 @@ class HomeController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ext
 
   val title = "WaliDB 2019 !"
 
-  def javascriptRoutes = Action { implicit request =>
-    Ok(
-      JavaScriptReverseRouter("jsRoutes")(
-        routes.javascript.UsersController.getUsers,
-        routes.javascript.UsersController.createUser,
-        routes.javascript.UsersController.getUser,
-        routes.javascript.UsersController.updateUser,
-        routes.javascript.UsersController.deleteUser
-      )
-    ).as("text/javascript")
-  }
   /**
     * Create an Action to render an HTML page with a welcome message.
     * The configuration in the `routes` file means that this method
@@ -39,6 +30,10 @@ class HomeController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ext
     for {
       users <- usersList
     } yield Ok(views.html.index(title, users))
+  }
+
+  def appSummary = Action {
+    Ok(Json.obj("content" -> "Scala Play React Seed"))
   }
 
 }
