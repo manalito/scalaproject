@@ -18,5 +18,4 @@ class HomeController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ext
   def appSummary = Action {
     Ok(Json.obj("content" -> "Scala Play React Seed"))
   }
-
 }
