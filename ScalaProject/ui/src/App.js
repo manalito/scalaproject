@@ -14,34 +14,34 @@ import scalaLogo from './images/scala.png';
 import './App.css';
 
 import Header from "./components/Header";
-import Movie from "./components/Movie";
+import Media from "./components/Media";
 import Search from "./components/Search";
 import Logo from "./components/Logo";
 
-const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b"; // random URL for test
+const MEDIAS_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b"; // random URL for test
 
 const initialState = {
     loading: true,
-    movies: [],
+    medias: [],
     errorMessage: null
 };
 
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case "SEARCH_MOVIES_REQUEST":
+        case "SEARCH_MEDIAS_REQUEST":
             return {
                 ...state,
                 loading: true,
                 errorMessage: null
             };
-        case "SEARCH_MOVIES_SUCCESS":
+        case "SEARCH_MEDIAS_SUCCESS":
             return {
                 ...state,
                 loading: false,
-                movies: action.payload
+                medias: action.payload
             };
-        case "SEARCH_MOVIES_FAILURE":
+        case "SEARCH_MEDIAS_FAILURE":
             return {
                 ...state,
                 loading: false,
@@ -70,11 +70,11 @@ const App = () => {
 
 
       useEffect(() => {
-          fetch(MOVIE_API_URL)
+          fetch(MEDIAS_API_URL)
               .then(response => response.json())
               .then(jsonResponse => {
                   dispatch({
-                      type: "SEARCH_MOVIES_SUCCESS",
+                      type: "SEARCH_MEDIAS_SUCCESS",
                       payload: jsonResponse.Search
                   });
               });
@@ -82,18 +82,18 @@ const App = () => {
 
       const search = searchValue => {
           dispatch({
-              type: "SEARCH_MOVIES_REQUEST" });
+              type: "SEARCH_MEDIAS_REQUEST" });
           fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
               .then(response => response.json())
               .then(jsonResponse => {
                   if (jsonResponse.Response === "True") {
                       dispatch({
-                          type: "SEARCH_MOVIES_SUCCESS",
+                          type: "SEARCH_MEDIAS_SUCCESS",
                           payload: jsonResponse.Search
                       });
                   } else {
                       dispatch({
-                          type: "SEARCH_MOVIES_FAILURE",
+                          type: "SEARCH_MEDIAS_FAILURE",
                           error: jsonResponse.Error
                       });
                   }
@@ -101,7 +101,7 @@ const App = () => {
       };
 
 
-      const { movies, errorMessage, loading } = state;
+      const { medias, errorMessage, loading } = state;
 
 
 
@@ -112,16 +112,16 @@ const App = () => {
                     <Logo/>
                     <Header text="HOOKED"/>
                     <Search search={search}/>
-                    <p className="App-intro">Sharing a few of our favourite movies</p>
-                    <div className="movies">
+                    <p className="App-intro">Sharing a few of our favourite medias</p>
+                    <div className="medias">
                         {loading && !errorMessage ? (
                             <span>loading... </span>
                         ) : errorMessage ? (
                             <div className="errorMessage">{errorMessage}</div>
                         ) : (
-                            movies.map((movie, index) => (
+                            medias.map((media, index) => (
                                 <div className="container">
-                                    <Movie key={`${index}-${movie.Title}`} movie={movie}/>
+                                    <Media key={`${index}-${media.Title}`} media={media}/>
                                 </div>
                             ))
                         )}

@@ -30,21 +30,37 @@
 .App-intro {
   font-size: large;
 }
-/* new css for movie component */
+/* new css for media component */
 * {
   box-sizing: border-box;
 }
-.movies {
+.media {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: initial;
   flex-direction: row;
+  width: 100%;
+  background: #eeeeee;
+  margin: 2px;
+  border-radius: 8px;
+}
+
+.media_infos {
+  margin-left: 16px;
+  width: 100%;
+}
+
+.media_poster {
+  border-radius: 4px;
 }
 
 .container {
   display: flex;
   align-items: flex-start;
-  margin:auto;
+  margin: auto;
   width: 80%;
+  background:#ddd;
+  margin-bottom: 4px;
+  border-radius: 10px;
 }
 
 .App-header h2 {
@@ -58,9 +74,9 @@
   padding: 8px;
   margin: 0 10px 30px 10px;
 }
-.movie {
-  padding: 5px 25px 10px 25px;
-  max-width: 25%;
+.media {
+  padding: 10px 25px 10px 25px;
+  max-width: 100%;
 }
 .errorMessage {
   margin: auto;
@@ -92,17 +108,17 @@ input[type="submit"]:hover {
   min-width: 170px;
 }
 @media screen and (min-width: 694px) and (max-width: 915px) {
-  .movie {
-    max-width: 33%;
+  .media {
+    max-width: 100%;
   }
 }
 @media screen and (min-width: 652px) and (max-width: 693px) {
-  .movie {
-    max-width: 50%;
+  .media {
+    max-width: 100%;
   }
 }
 @media screen and (max-width: 651px) {
-  .movie {
+  .media {
     max-width: 100%;
     margin: auto;
   }

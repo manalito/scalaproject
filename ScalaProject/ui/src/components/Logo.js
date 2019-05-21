@@ -1,5 +1,5 @@
 import React from "react";
-import Movie from "./Movie";
+import Media from "./Media";
 
 // Logo
 const Logo = () => ({
