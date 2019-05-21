@@ -10,4 +10,6 @@ GET      /                          controllers.FrontendController.index()
 GET     /api/summary                controllers.HomeController.appSummary
 
 # Serve static assets under public directory
-GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+#GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+GET     /users                      controllers.UsersController.getUsers
+GET     /users/:userId              controllers.UsersController.getUser(userId: Long)
