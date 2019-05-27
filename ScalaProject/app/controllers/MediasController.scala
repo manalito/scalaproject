@@ -7,13 +7,14 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import play.api.mvc.{AbstractController, ControllerComponents}
+import services.Omdb
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO) extends AbstractController(cc) {
+class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, omdb: Omdb) extends AbstractController(cc) {
 
-  // Refer to the StudentsController class in order to have more explanations.
+  // Refer to the MediasController class in order to have more explanations.
   implicit val mediaToJson: Writes[Media] = (
     (JsPath \ "id").write[Option[Long]] and
     (JsPath \ "omdb_id").write[String]
@@ -92,5 +93,18 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO)
       ))
     }
   }
+
+  def searchMedia(search: String) = Action.async {
+    omdb.searchMedia(search).map {
+      e => Ok(Json.parse(e))
+    }
+  }
+
+  def requestMedia(imdbId: String) = Action.async {
+    omdb.requestMedia(imdbId).map {
+      e => Ok(Json.parse(e))
+    }
+  }
+
 
 }
