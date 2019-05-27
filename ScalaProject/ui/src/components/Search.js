@@ -15,14 +15,22 @@ const Search = (props) => {
         resetInputField();
     }
     return (
-        <form className="search">
+        <form id="search" className="Search">
             <input
                 value={searchValue}
                 onChange={handleSearchInputChanges}
-                type="text"
+                type="search"
+                placeholder="Search for a title..."
             />
             <input onClick={callSearchFunction} type="submit" value="SEARCH" />
         </form>
+
+        /*<form onSubmit={this.props.callSearchFunction} id="search" className="Search">
+        <input type="search" placeholder="Search for a title..." />
+        </form>*/
     );
 }
+
+
+
 export default Search;

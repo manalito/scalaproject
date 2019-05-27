@@ -110,9 +110,14 @@ const App = () => {
 
                 <div className="App">
                     <Logo/>
-                    <Header text="HOOKED"/>
+
+
                     <Search search={search}/>
-                    <p className="App-intro">Sharing a few of our favourite medias</p>
+
+                    /*<div className="content">
+                        <p className="App-intro">Sharing a few of our favourite medias</p>
+                    </div>*/
+
                     <div className="medias">
                         {loading && !errorMessage ? (
                             <span>loading... </span>
