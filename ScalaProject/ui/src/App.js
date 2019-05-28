@@ -13,6 +13,7 @@ import Header from "./components/Header";
 import Media from "./components/Media";
 import Search from "./components/Search";
 import Logo from "./components/Logo";
+import Navbar from "./components/Navbar"
 
 const MEDIAS_API_URL = "/api/omdb/man"; // random URL for test
 
@@ -106,7 +107,7 @@ const App = () => {
 
                 <div className="App">
                     <Logo/>
-                    <Header text="ScaleMedia"/>
+                    <Navbar text="ScaleMedia" />
                     <Search search={search}/>
 
 
