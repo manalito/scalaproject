@@ -49,7 +49,7 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     db.run(query.result)
   }
 
-  /** Retrieve the names of the courses only */
+  /** Retrieve the names of the users only */
   def namesList(): Future[Seq[String]] = {
     val query = for {
       user <- users
@@ -58,9 +58,13 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     db.run(query.result)
   }
 
-  /** Retrieve a course from the id. */
+  /** Retrieve a user from the id. */
   def findById(id: Long): Future[Option[User]] =
     db.run(users.filter(_.id === id).result.headOption)
+
+  /** Retrieve a user from the username. */
+  def findByUsername(username: String): Future[Option[User]] =
+    db.run(users.filter(_.username === username).result.headOption)
 
   /** Get the Medias associated with the given user's ID. */
   def getMediasOfUser(id: Long): Future[Seq[Media]] = {

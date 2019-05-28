@@ -56,15 +56,15 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ex
       )
    }
 
-   def getUser(userId: Long) = Action.async {
-      val optionalCourse = usersDAO.findById(userId)
+   def getUser(username: String) = Action.async {
+      val optionalCourse = usersDAO.findByUsername(username)
 
       optionalCourse.map {
          case Some(c) => Ok(Json.toJson(c))
          case None =>
             NotFound(Json.obj(
                "status" -> "Not Found",
-               "message" -> ("User #" + userId + " not found.")
+               "message" -> ("User #" + username + " not found.")
             ))
       }
    }
