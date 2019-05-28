@@ -1,15 +1,15 @@
-import React, {useReducer, useEffect} from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
 
-import Client from "./Client";
+// import Client from "./Client";
 
 import './App.css';
 
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import Home from "./components/Home";
 import Logo from "./components/Logo";
 import Navbar from "./components/Navbar"
