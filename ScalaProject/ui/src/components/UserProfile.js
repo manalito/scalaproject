@@ -1,8 +1,9 @@
 import React, {useReducer, useEffect} from 'react';
-import Search from "./Search";
+//import Search from "./Search";
+import User from "./User";
 import {BrowserRouter as Router} from "react-router-dom";
 
-const USERS_URL = "http://localhost:9000/users"; // random URL for test
+const USERS_URL = "/api/users"; // random URL for test
 
 const initialState = {
     loading: true,
@@ -62,10 +63,10 @@ const UserProfile = (props) => {
             });
     }, []);
 
-    const search = searchValue => {
+/*    const search = searchValue => {
         dispatch({
             type: "FETCH_USERS_REQUEST" });
-        fetch(`/user/${searchValue}`)
+        fetch(`/api/user/${searchValue}`)
             .then(response => response.json())
             .then(jsonResponse => {
                 if (jsonResponse.Response === "True") {
@@ -80,7 +81,7 @@ const UserProfile = (props) => {
                     });
                 }
             });
-    };
+    };*/
 
 
     const { users, errorMessage, loading } = state;
@@ -89,7 +90,6 @@ const UserProfile = (props) => {
     return (
         <Router>
             <div>
-                <Search search={search}/>
 
                 <h2>List of user profiles</h2>
 
@@ -103,9 +103,9 @@ const UserProfile = (props) => {
                     ) : errorMessage ? (
                         <div className="errorMessage">{errorMessage}</div>
                     ) : (
-                        users.map((user) => (
+                        users.map((user, index) => (
                             <div className="container">
-                                <p key={`${user.id}`}>${user.username}</p>
+                                <User key={`${index}-${user.id}`}>${user.username} user={user}</User>
                             </div>
                         ))
                     )}

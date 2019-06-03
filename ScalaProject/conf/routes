@@ -11,7 +11,7 @@ GET     /api/summary                controllers.HomeController.appSummary
 
 # Serve static assets under public directory
 #GET     /*file                      controllers.FrontendController.assetOrDefault(file)
-GET     /users                      controllers.UsersController.getUsers
-GET     /users/:username            controllers.UsersController.getUser(username: String)
+GET     /api/users                      controllers.UsersController.getUsers
+GET     /api/users/:username            controllers.UsersController.getUser(username: String)
 GET     /api/omdb/:search           controllers.MediasController.searchMedia(search: String)
 GET     /api/omdb/imdb/:imdbId      controllers.MediasController.requestMedia(imdbId: String)
