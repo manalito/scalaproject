@@ -5,11 +5,8 @@ import React from "react";
 // that renders the media title, image, and year.
 const User = ({ user }) => {
     return (
-        <div className="user">
-
-            <div className="user_infos">
-                <p>username: {user.username}</p>
-            </div>
+        <div className="user_infos">
+                <p>{user.username}</p>
         </div>
     );
 };
