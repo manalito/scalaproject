@@ -14,6 +14,7 @@ import Home from "./components/Home";
 import Logo from "./components/Logo";
 import Navbar from "./components/Navbar"
 import UserProfile from "./components/UserProfile"
+import Login from "./components/Login"
 
 
 /*class App extends Component {
@@ -34,6 +35,8 @@ const App = () => {
                     <Navbar text="ScaleMedia" />
                     <Route exact path='/' component={Home} />
                     <Route path='/profile' component={UserProfile} />
+                    <Route path='/login' component={Login} />
+
                 </div>
 
             </Router>

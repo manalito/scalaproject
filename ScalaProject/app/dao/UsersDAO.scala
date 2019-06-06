@@ -91,4 +91,10 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
   /** Delete a user, then return an integer that indicates if the course was found (1) or not (0) */
   def delete(id: Long): Future[Int] =
     db.run(users.filter(_.id === id).delete)
+
+  /** Authentication of a user when trying to log in**/
+  /*def authenticate(username: String, password: String): Future[Option[User]] = {
+    val query = users.filter(_.username == username).filter(_.password == password).result.headOption
+    db.run(query)
+  }*/
 }
