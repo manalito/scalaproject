@@ -24,7 +24,11 @@ class Login extends Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault();
+        //event.preventDefault();
+        fetch(`/api/login/${this.state.email}/${this.state.password}`)
+            .then(response => response.json())
+            .then()
+
     }
 
     render() {
