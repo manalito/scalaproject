@@ -93,8 +93,8 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     db.run(users.filter(_.id === id).delete)
 
   /** Authentication of a user when trying to log in**/
-  /*def authenticate(username: String, password: String): Future[Option[User]] = {
-    val query = users.filter(_.username == username).filter(_.password == password).result.headOption
+  def authenticate(username: String, password: String): Future[Boolean] = {
+    val query = users.filter(_.username == username).filter(_.password == password).exists.result
     db.run(query)
-  }*/
+  }
 }

@@ -16,4 +16,12 @@ GET     /api/users/:username            controllers.UsersController.getUser(user
 GET     /api/omdb/:search           controllers.MediasController.searchMedia(search: String)
 GET     /api/omdb/imdb/:imdbId      controllers.MediasController.requestMedia(imdbId: String)
 GET     /api/login/:username/:password      controllers.LoginController.login(user:String,password:String)
+
+
+
+#GET     /signup                     controllers.AuthController.signup()
+#POST    /signup                     controllers.AuthController.newUser()
+#GET     /login                      controllers.AuthController.login()
+#POST    /login                      controllers.AuthController.authenticate()
+#GET     /logout                     controllers.AuthController.logout()
 #GET     /api/register/:username/:password   controllers.UsersController.createUser(username: String,password: String)

@@ -19,4 +19,7 @@ libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice )
 libraryDependencies += "com.typesafe.play" %% "play-slick" % "4.0.0" // Slick
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.45" // Connecteur MySQL 
 
+// https://mvnrepository.com/artifact/org.mindrot/jbcrypt
+libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m"
+
       
