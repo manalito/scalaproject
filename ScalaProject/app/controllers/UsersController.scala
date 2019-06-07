@@ -1,17 +1,20 @@
 package controllers
 
-import dao.UsersDAO
+import dao.{MediasDAO, UsersDAO}
 import javax.inject.{Inject, Singleton}
 import models.User
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import play.api.mvc.{AbstractController, ControllerComponents}
+import services.Omdb
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 @Singleton
-class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) extends AbstractController(cc) {
+class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, mediasDAO: MediasDAO, omdb: Omdb) extends AbstractController(cc) {
 
    // Refer to the UsersController class in order to have more explanations.
    implicit val userToJson: Writes[User] = (
@@ -100,4 +103,15 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ex
       }
    }
 
+   def getStatistics(userId: Long) = Action.async {
+
+      val list_time = scala.collection.mutable.ArrayBuffer.empty[Int]
+      usersDAO.getMediasOfUser(userId).map(medias =>
+         medias.map(m =>
+            omdb.getMediaDuration(m.ombd_id
+            ).map(t => list_time += t)
+         )
+      )
+      Future { Ok(Json.obj("duration" -> list_time.sum))}
+   }
 }

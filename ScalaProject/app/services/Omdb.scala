@@ -36,4 +36,10 @@ class Omdb @Inject() (ws: WSClient) {
          response.body
       }
    }
+
+   def getMediaDuration(mediaId: String): Future[Int] = {
+      ws.url(url + "&i=" + mediaId).get().map { response =>
+         Integer.valueOf((Json.parse(response.body) \ "Runtime").toString.split(' ')(0))
+      }
+   }
 }
