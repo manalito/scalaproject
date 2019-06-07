@@ -79,7 +79,7 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     }
   }
 
-  def deleteMedia(mediaId: Long) = Action.async {
+  def deleteMedia(mediaId: String) = Action.async {
     mediasDAO.delete(mediaId).map {
       case 1 => Ok(
         Json.obj(

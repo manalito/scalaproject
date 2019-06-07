@@ -4,16 +4,19 @@
 # ~~~~
 
 # Serve index page from public directory
-GET      /                          controllers.FrontendController.index()
+GET      /                              controllers.FrontendController.index()
 
 # An example route (Prefix all API routes with apiPrefix defined in application.conf)
-GET     /api/summary                controllers.HomeController.appSummary
+GET     /api/summary                    controllers.HomeController.appSummary
 
 # Serve static assets under public directory
-#GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+#GET     /*file                         controllers.FrontendController.assetOrDefault(file)
 GET     /api/users                      controllers.UsersController.getUsers
 GET     /api/users/:username            controllers.UsersController.getUser(username: String)
-GET     /api/omdb/:search           controllers.MediasController.searchMedia(search: String)
-GET     /api/omdb/imdb/:imdbId      controllers.MediasController.requestMedia(imdbId: String)
-GET     /api/login/:username/:password      controllers.LoginController.login(user:String,password:String)
+
+POST    /api/medias/                    controllers.MediasController.createMedia()
+DELETE  /api/medias/:omdbId             controllers.MediasController.deleteMedia(omdbId: String)
+GET     /api/omdb/:search               controllers.MediasController.searchMedia(search: String)
+GET     /api/omdb/imdb/:imdbId          controllers.MediasController.requestMedia(imdbId: String)
+# GET     /api/login/                     controllers.LoginController.login("toto","tata")
 #GET     /api/register/:username/:password   controllers.UsersController.createUser(username: String,password: String)

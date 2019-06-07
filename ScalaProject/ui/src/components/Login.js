@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
 class Login extends Component {
@@ -29,6 +28,8 @@ class Login extends Component {
 
     render() {
         return (
+
+            <div className="container">
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
@@ -57,6 +58,7 @@ class Login extends Component {
                         Login
                     </Button>
                 </form>
+            </div>
             </div>
         );
     };

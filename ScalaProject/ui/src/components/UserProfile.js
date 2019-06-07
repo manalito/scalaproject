@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import User from "./User";
 import {BrowserRouter as Router} from "react-router-dom";
-import Search from "./Search";
 
-const USERS_URL = "/api/users"; // random URL for test
+const USERS_URL = "/api/users";
 
 
 class UserProfile extends Component {
@@ -31,7 +29,7 @@ class UserProfile extends Component {
 
         const userList = users.length ? (
             users.map(user => {
-                return <div className="user" key={user.id}><p>{user.username}</p></div>
+                return <div className="user" key={user.id}><p>Username: {user.username}</p></div>
             })
         ) : (
             <div className="center">NO users yet</div>

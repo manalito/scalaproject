@@ -71,6 +71,6 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
   }
 
   /** Delete a media, then return an integer that indicate if the media was found (1) or not (0). */
-  def delete(id: Long): Future[Int] =
-    db.run(medias.filter(_.id === id).delete)
+  def delete(id: String): Future[Int] =
+    db.run(medias.filter(_.ombdId === id).delete)
 }
