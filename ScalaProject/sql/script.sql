@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `Media`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Media` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `omdb_id` varchar(10) NOT NULL,
+  `imdb_id` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

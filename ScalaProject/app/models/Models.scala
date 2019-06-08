@@ -5,7 +5,7 @@ package models
 case class User(id: Option[Long], username: String, password: String, time_movies: Long, time_series: Long, time_total: Long)
 
 // Represent a database's media entry.
-case class Media(id: Option[Long], ombd_id: String)
+case class Media(id: Option[Long], imdbId: String)
 
 // Represent a database's user <- > media entry.
-case class UserMedia(id: Option[Long], user_id: Long, media_id: Long)
+case class UserMedia(id: Option[Long], user_id: Long, imdbId: String)

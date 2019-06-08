@@ -15,11 +15,13 @@ trait MediasComponent {
 
   // This class convert the database's medias table in a object-oriented entity: the Media model.
   class MediasTable(tag: Tag) extends Table[Media](tag, "Media") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc) // Primary key, auto-incremented
-    def ombdId = column[String]("omdb_id")
+    def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc) // Primary key
+    def imdbId = column[String]("imdb_id")
 
     // Map the attributes with the model; the ID is optional.
-    def * = (id.?, ombdId) <> (Media.tupled, Media.unapply)
+    def * = (id, imdbId) <> (Media.tupled, Media.unapply)
+
+
   }
 }
 
@@ -36,7 +38,7 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
 
   /** Retrieve the list of medias */
   def list(): Future[Seq[Media]] = {
-    val query = medias.sortBy(s => s.ombdId)
+    val query = medias.sortBy(s => s.id)
     db.run(query.result)
   }
 
@@ -59,18 +61,19 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
     db.run(medias.filter(_.id === id).result.headOption)
 
   /** Insert a new media, then return it. */
-  def insert(media: Media): Future[Media] = {
-    val insertQuery = medias returning medias.map(_.id) into ((media, id) => media.copy(Some(id)))
+  def insert(media: Media) = {
+    val insertQuery = medias returning medias.map(_.id) into ((media, id) => media.copy(id))
+
     db.run(insertQuery += media)
   }
 
   /** Update a media, then return an integer that indicate if the media was found (1) or not (0). */
   def update(id: Long, media: Media): Future[Int] = {
-    val studentToUpdate: Media = media.copy(Some(id))
-    db.run(medias.filter(_.id === id).update(studentToUpdate))
+    val mediaToUpdate: Media = media.copy(Some(id))
+    db.run(medias.filter(_.id === id).update(mediaToUpdate))
   }
 
   /** Delete a media, then return an integer that indicate if the media was found (1) or not (0). */
-  def delete(id: String): Future[Int] =
-    db.run(medias.filter(_.ombdId === id).delete)
+  def delete(imdbId: String): Future[Int] =
+    db.run(medias.filter(_.imdbId === imdbId).delete)
 }
