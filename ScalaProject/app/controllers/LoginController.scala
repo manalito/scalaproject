@@ -18,16 +18,8 @@ class LoginController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ex
         val password = (request.body \ "password").as[String]
 
         usersDAO.authenticate(username,password).map {
-          case _ => Ok.withCookies(Cookie("walidb", username))
+          case true => Ok.withCookies(Cookie("walidb", username))
           case false => NotFound
         }
-        //Future {Ok(Json.obj("username" -> username, "pw" -> password))}
     }
-/*
-  def login() = Action.async(parse.json) {
-      request =>
-      val logger: play.api.Logger = Logger(this.getClass)
-      logger.error("aaaaaaaaaaaaaaaaaaaaaaah")
-      Future {Ok(Json.obj("walidb" -> "iscool"))}
-  }*/
 }

@@ -8,7 +8,8 @@ class Login extends Component {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            error: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -35,12 +36,22 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password
         })
-        }).then(response => console.log(response))
+        }).then(response =>
+            this.setState({
+                error: !(response.status === 200)
+            })
+    )
     }
 
     render() {
-        return (
 
+        let error_text = null
+
+        if (this.state.error) {
+            error_text = <p className="error">Wrong password or invalid user</p>
+        }
+
+        return (
             <div className="container">
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
@@ -61,6 +72,7 @@ class Login extends Component {
                             type="password"
                         />
                     </FormGroup>
+                    {error_text}
                     <Button
                         block
                         bsSize="large"

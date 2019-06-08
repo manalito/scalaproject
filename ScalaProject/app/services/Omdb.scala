@@ -20,7 +20,7 @@ import scala.concurrent.Future
 
 @Singleton
 class Omdb @Inject() (ws: WSClient) {
-   val url = "https://www.omdbapi.com/?apikey=f59fab75"
+   val url = "https://www.omdbapi.com/?apikey=f59fab75&type=movie"
 
    // TODO use futur to manage timeout
    //def searchMedia(media: String): Future[String] = scala.io.Source.fromURL(url + "&s=" + media)
