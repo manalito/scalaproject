@@ -17,7 +17,7 @@
 
 ### Priority 1
 - finir le contrôle de si l'utilisateur est dans la db avec l'authentification
-- fontions `register` et `logout` in **LoginController**
+- fonctions `register` et `logout` in **LoginController**
 - refactor **FrontendController** in **HomeController**
 
 ### Priority 2
@@ -37,3 +37,5 @@
 - terminator
 - pirate of the caribbean
 - mission impossible
+
+=> create route to get rdm medias
