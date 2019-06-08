@@ -7,13 +7,14 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            email: "",
+            username: "",
             password: ""
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
+        return this.state.username.length > 0 && this.state.password.length > 0;
     }
 
     handleChange = event => {
@@ -22,8 +23,19 @@ class Login extends Component {
         });
     }
 
-    handleSubmit = event => {
+    handleSubmit(event) {
         event.preventDefault();
+
+        fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password
+        })
+        }).then(response => console.log(response))
     }
 
     render() {
@@ -32,12 +44,12 @@ class Login extends Component {
             <div className="container">
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
-                        <FormLabel>Email</FormLabel>
+                    <FormGroup controlId="username" bsSize="large">
+                        <FormLabel>username</FormLabel>
                         <FormControl
                             autoFocus
-                            type="email"
-                            value={this.state.email}
+                            type="text"
+                            value={this.state.username}
                             onChange={this.handleChange}
                         />
                     </FormGroup>

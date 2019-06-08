@@ -13,10 +13,11 @@ GET     /api/summary                    controllers.HomeController.appSummary
 #GET     /*file                         controllers.FrontendController.assetOrDefault(file)
 GET     /api/users                      controllers.UsersController.getUsers
 GET     /api/users/:username            controllers.UsersController.getUser(username: String)
-
-POST    /api/medias/                    controllers.MediasController.createMedia()
+POST    /api/medias/                    controllers.MediasController.createMedia
 DELETE  /api/medias/:omdbId             controllers.MediasController.deleteMedia(omdbId: String)
 GET     /api/omdb/:search               controllers.MediasController.searchMedia(search: String)
 GET     /api/omdb/imdb/:imdbId          controllers.MediasController.requestMedia(imdbId: String)
 #GET     /api/login/                     controllers.LoginController.login("toto","tata")
+
+POST     /api/login                     controllers.LoginController.login
 #GET     /api/register/:username/:password   controllers.UsersController.createUser(username: String,password: String)
