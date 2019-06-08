@@ -10,6 +10,7 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 import services.Omdb
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 @Singleton
 class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, omdb: Omdb) extends AbstractController(cc) {
@@ -17,12 +18,12 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
   // Refer to the MediasController class in order to have more explanations.
   implicit val mediaToJson: Writes[Media] = (
     (JsPath \ "id").write[Option[Long]] and
-    (JsPath \ "omdb_id").write[String]
+    (JsPath \ "imdb_id").write[String]
   )(unlift(Media.unapply))
 
   implicit val jsonToMedia: Reads[Media] = (
-    (JsPath \ "id").readNullable[Long] and
-    (JsPath \ "omdb_id").read[String](minLength[String](9) keepAnd maxLength[String](11))
+    (JsPath \ "id").readNullable[Long]  and
+    (JsPath \ "imdb_id").read[String] (minLength[String](9) keepAnd maxLength[String](11))
   )(Media.apply _)
 
   def validateJson[A : Reads] = parse.json.validate(
@@ -43,38 +44,38 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
         Json.obj(
           "status" -> "OK",
           "id" -> c.id,
-          "message" -> ("Media '" + c.ombd_id + "' saved.")
+          "message" -> ("Media '" + c.imdbId + "' saved.")
         )
       )
     )
   }
 
-  def getMedia(mediaId: Long) = Action.async {
-    val optionalMedia = mediasDAO.findById(mediaId)
+  def getMedia(id: Long) = Action.async {
+    val optionalMedia = mediasDAO.findById(id)
 
     optionalMedia.map {
       case Some(c) => Ok(Json.toJson(c))
       case None =>
         NotFound(Json.obj(
           "status" -> "Not Found",
-          "message" -> ("Media #" + mediaId + " not found.")
+          "message" -> ("Media #" + id + " not found.")
         ))
     }
   }
 
-  def updateMedia(mediaId: Long) = Action.async(validateJson[Media]) { request =>
+  def updateMedia(id: Long) = Action.async(validateJson[Media]) { request =>
     val newMedia = request.body
 
-    mediasDAO.update(mediaId, newMedia).map {
+    mediasDAO.update(id, newMedia).map {
       case 1 => Ok(
         Json.obj(
           "status" -> "OK",
-          "message" -> ("Media '" + newMedia.ombd_id + "' updated.")
+          "message" -> ("Media '" + newMedia.imdbId + "' updated.")
         )
       )
       case 0 => NotFound(Json.obj(
         "status" -> "Not Found",
-        "message" -> ("Media #" + mediaId + " not found.")
+        "message" -> ("Media #" + id + " not found.")
       ))
     }
   }

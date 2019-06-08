@@ -2,7 +2,7 @@ package dao
 
 import scala.concurrent.Future
 import javax.inject.{Inject, Singleton}
-import models.{Media, User}
+import models.{Media, User, UserMedia}
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import slick.jdbc.JdbcProfile
@@ -70,11 +70,25 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
   def getMediasOfUser(id: Long): Future[Seq[Media]] = {
     val query = for {
       userMedias <- usersMedias
-      media <- medias if userMedias.mediaId === media.id
+      media <- medias if userMedias.imdbId === media.imdbId
     } yield media
 
     db.run(query.result)
   }
+
+   /** Get the Medias associated with the given user's ID. */
+   def createMediaForUser(userId: Long, imdbId: String) = {
+
+
+     /*usersMedias.insertOrUpdate()
+
+      val query = for {
+         userMedias <- usersMedias
+         media <- medias if userMedias.mediaId === media.id
+      } yield media
+
+      db.run(query.result)*/
+   }
 
   /** Insert a new user, then return it. */
   def insert(user: User): Future[User] = {
