@@ -1,0 +1,8 @@
+- Frontend 
+  - Page statistiques - 
+  - Page register 
+  - Faire l'icone Walid DB - OK
+    - Auteur - résumé - acteurs
+- Backend 
+  - Fonctions DB (aurélien) DONE
+    - 
