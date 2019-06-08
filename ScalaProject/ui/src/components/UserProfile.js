@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router} from "react-router-dom";
+import Statistics from './Statistics'
+import Chart from "./Chart";
 
 const USERS_URL = "/api/users";
 const USER_URL = "/api/users";
@@ -36,12 +38,12 @@ class UserProfile extends Component {
     }*/
 
     componentDidMount() {
-        fetch(`${USERS_URL}/testuser`)
+        fetch(`${USERS_URL}`)
             .then(response => response.json())
             .then(jsonResponse => {
                 console.log(jsonResponse);
                 this.setState({
-                    user: jsonResponse
+                    users: jsonResponse
                 })
             })
     }
@@ -53,7 +55,7 @@ class UserProfile extends Component {
 
         const userList = users.length ? (
             users.map(user => {
-                return <div className="user" key={user.id}><p>Username: {user.username}</p></div>
+                return <div className="user" key={user.id}><p>Username: {user.username} Id: {user.id}</p></div>
             })
         ) : (
             <div className="center">NO users yet</div>
@@ -72,8 +74,10 @@ class UserProfile extends Component {
                     <div id="user-profile">
                         <MainPanel info={user.basicInfo} />
                     </div>
+                    <div>
+                    <Statistics text={"hello"}/>
+                    </div>
                 </div>
-
             </Router>
 
         )

@@ -21,3 +21,4 @@ GET     /api/omdb/imdb/:imdbId          controllers.MediasController.requestMedi
 
 POST     /api/login                     controllers.LoginController.login
 #GET     /api/register/:username/:password   controllers.UsersController.createUser(username: String,password: String)
+GET     /api/users/statistics/:userId           controllers.UsersController.getStatistics(userId:Long)

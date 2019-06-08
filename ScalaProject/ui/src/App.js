@@ -15,6 +15,7 @@ import Logo2 from "./components/Logo2";
 import Navbar from "./components/Navbar"
 import UserProfile from "./components/UserProfile"
 import Login from "./components/Login"
+import Statistics from "./components/Statistics";
 
 
 /*class App extends Component {
