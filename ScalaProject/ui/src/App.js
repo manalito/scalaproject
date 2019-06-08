@@ -11,7 +11,7 @@ import './App.css';
 
 // import Header from "./components/Header";
 import Home from "./components/Home";
-import Logo from "./components/Logo";
+import Logo2 from "./components/Logo2";
 import Navbar from "./components/Navbar"
 import UserProfile from "./components/UserProfile"
 import Login from "./components/Login"
@@ -31,7 +31,7 @@ const App = () => {
         return (
             <Router>
                 <div className="App">
-                    <Logo/>
+                    <Logo2/>
                     <Navbar text="ScaleMedia" />
                     <Route exact path='/' component={Home} />
                     <Route path='/profile' component={UserProfile} />
