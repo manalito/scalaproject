@@ -70,25 +70,11 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
   def getMediasOfUser(id: Long): Future[Seq[Media]] = {
     val query = for {
       userMedias <- usersMedias
-      media <- medias if userMedias.imdbId === media.imdbId
+      media <- medias if userMedias.mediaId === media.id
     } yield media
 
     db.run(query.result)
   }
-
-   /** Get the Medias associated with the given user's ID. */
-   def createMediaForUser(userId: Long, imdbId: String) = {
-
-
-     /*usersMedias.insertOrUpdate()
-
-      val query = for {
-         userMedias <- usersMedias
-         media <- medias if userMedias.mediaId === media.id
-      } yield media
-
-      db.run(query.result)*/
-   }
 
   /** Insert a new user, then return it. */
   def insert(user: User): Future[User] = {

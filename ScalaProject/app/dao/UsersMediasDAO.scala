@@ -17,10 +17,10 @@ trait UsersMediasComponent extends UsersComponent with MediasComponent {
   class UsersMediasTable(tag: Tag) extends Table[UserMedia](tag, "UsersMedias") {
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc) // Primary key, auto-incremented
     def userId = column[Long]("user_id")
-    def imdbId = column[String]("imdb_id")
+    def mediaId = column[Long]("media_id")
 
     // Map the attributes with the model; the ID is optional.
-    def * = (id.?, userId, imdbId) <> (UserMedia.tupled, UserMedia.unapply)
+    def * = (id.?, userId, mediaId) <> (UserMedia.tupled, UserMedia.unapply)
   }
 }
 
@@ -41,4 +41,8 @@ class UsersMediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     val insertQuery = usersMedias returning usersMedias.map(_.id) into ((user, id) => user.copy(Some(id)))
     db.run(insertQuery += userMedia)
   }
+
+  /** Retrieve a media from the userId and the mediaId. */
+  def findByUserMediaId(userId: Long, mediaId: Long): Future[Option[UserMedia]] =
+    db.run(usersMedias.filter(m => m.userId === userId && m.mediaId === mediaId).result.headOption)
 }

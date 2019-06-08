@@ -1,8 +1,9 @@
 package controllers
 
-import dao.MediasDAO
+import dao.{MediasDAO, UsersMediasDAO}
 import javax.inject.{Inject, Singleton}
-import models.Media
+import models._
+import play.api.db
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
@@ -13,7 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, omdb: Omdb) extends AbstractController(cc) {
+class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, usersMediasDAO: UsersMediasDAO, omdb: Omdb) extends AbstractController(cc) {
 
   // Refer to the MediasController class in order to have more explanations.
   implicit val mediaToJson: Writes[Media] = (
@@ -37,6 +38,20 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
 
   def createMedia = Action.async(validateJson[Media]) { request =>
     val media = request.body
+    val userId = 1 /*request.cookies.get("walidb") match {
+      case Some(x) => java.lang.Long.valueOf(x.value)
+    }*/
+
+    val mediaId = mediasDAO.findByImdbId(media.imdbId).map{
+      case Some(m) => m.id match {
+        case Some(id) => conditionalUserMediaInsert(userId, id)
+      }
+      case _ => mediasDAO.insert(media).map(m => m.id match {
+          case Some(id) => conditionalUserMediaInsert(userId, id)
+      })
+    }
+
+
     val createdMedia = mediasDAO.insert(media)
 
     createdMedia.map(c =>
@@ -48,6 +63,12 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
         )
       )
     )
+  }
+
+  def conditionalUserMediaInsert(userId: Long, mediaId: Long): Future[Future[UserMedia]] = {
+    usersMediasDAO.findByUserMediaId(userId, mediaId).map(userMedia => userMedia match {
+      case None => usersMediasDAO.insert(UserMedia(None, userId, mediaId))
+    })
   }
 
   def getMedia(id: Long) = Action.async {

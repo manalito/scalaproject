@@ -8,4 +8,4 @@ case class User(id: Option[Long], username: String, password: String, time_movie
 case class Media(id: Option[Long], imdbId: String)
 
 // Represent a database's user <- > media entry.
-case class UserMedia(id: Option[Long], user_id: Long, imdbId: String)
+case class UserMedia(id: Option[Long], userId: Long, mediaId: Long)

@@ -60,8 +60,12 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
   def findById(id: Long): Future[Option[Media]] =
     db.run(medias.filter(_.id === id).result.headOption)
 
+  /** Retrieve a media from the id. */
+  def findByImdbId(imdbId: String): Future[Option[Media]] =
+    db.run(medias.filter(_.imdbId === imdbId).result.headOption)
+
   /** Insert a new media, then return it. */
-  def insert(media: Media) = {
+  def insert(media: Media): Future[Media] = {
     val insertQuery = medias returning medias.map(_.id) into ((media, id) => media.copy(id))
 
     db.run(insertQuery += media)
