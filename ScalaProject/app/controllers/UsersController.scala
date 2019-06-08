@@ -108,7 +108,7 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
       val list_time = scala.collection.mutable.ArrayBuffer.empty[Int]
       usersDAO.getMediasOfUser(userId).map(medias =>
          medias.map(m =>
-            omdb.getMediaDuration(m.ombd_id
+            omdb.getMediaDuration(m.imdbId
             ).map(t => list_time += t)
          )
       )
