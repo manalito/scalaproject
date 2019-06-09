@@ -42,6 +42,40 @@ class UsersMediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     db.run(insertQuery += userMedia)
   }
 
+  /** Insert a new userMedia if not exists then return it. */
+  def insertIfNotExist(userMedia: UserMedia): Future[Any] = {
+
+    /*def insertIfNotExistQuery(userMedia: UserMedia) = usersMedias.forceInsertQuery {
+      val exists = (for (uM <- usersMedias if uM.userId === userMedia.userId.bind && uM.mediaId === userMedia.mediaId.bind) yield uM).exists
+
+      val insert = (None, userMedia.userId, userMedia.mediaId) (UserMedia.apply _ tupled)
+      //val insertQuery = usersMedias returning usersMedias.map(_.id) into ((user, id) => user.copy(Some(id)))
+      for (uM <- Query(insert) if !exists) yield uM
+    }*/
+
+    val a =
+       usersMedias.filter(uM => uM.userId === userMedia.userId && uM.mediaId === userMedia.mediaId ).exists.result.flatMap { exists =>
+         if (!exists) {
+           val userM = UserMedia(
+             None,
+             userMedia.userId,
+             userMedia.mediaId
+           )
+           usersMedias += userM
+
+         } else {
+           DBIO.successful(userMedia) // no-op
+
+         }
+       }.transactionally
+
+    db.run(a)
+
+
+  }
+
+
+
   /** Retrieve a media from the userId and the mediaId. */
   def findByUserMediaId(userId: Long, mediaId: Long): Future[Option[UserMedia]] =
     db.run(usersMedias.filter(m => m.userId === userId && m.mediaId === mediaId).result.headOption)

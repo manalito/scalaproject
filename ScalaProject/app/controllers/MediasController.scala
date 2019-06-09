@@ -36,11 +36,11 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     mediasList map (c => Ok(Json.toJson(c)))
   }
 
-  def createMedia = Action.async(validateJson[Media]) { request =>
+  /*def createMedia = Action.async(validateJson[Media]) { request =>
     val media = request.body
-    val userId = 1 /*request.cookies.get("walidb") match {
+    val userId = request.cookies.get("walidb") match {
       case Some(x) => java.lang.Long.valueOf(x.value)
-    }*/
+    }
 
     val mediaId = mediasDAO.findByImdbId(media.imdbId).map{
       case Some(m) => m.id match {
@@ -51,15 +51,11 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
       })
     }
 
-
-    val createdMedia = mediasDAO.insert(media)
-
-    createdMedia.map(c =>
+    mediaId.map(c =>
       Ok(
         Json.obj(
           "status" -> "OK",
-          "id" -> c.id,
-          "message" -> ("Media '" + c.imdbId + "' saved.")
+          "id" -> c.toString
         )
       )
     )
@@ -69,6 +65,24 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     usersMediasDAO.findByUserMediaId(userId, mediaId).map(userMedia => userMedia match {
       case None => usersMediasDAO.insert(UserMedia(None, userId, mediaId))
     })
+  }*/
+
+
+  def createMedia = Action.async(validateJson[Media]) { request =>
+    val media = request.body
+    val userId = request.cookies.get("walidb") match {
+      case Some(x) => java.lang.Long.valueOf(x.value)
+    }
+
+    mediasDAO.insertIfNotExist(media).map {
+      case Some(m) => m.id match {
+        case Some(id) => usersMediasDAO.insertIfNotExist(UserMedia(None, userId, id))
+          Ok(Json.obj("status" -> "OK"))
+        case _ => NotFound(Json.obj("status" -> "Error insert 1"))
+      }
+      case _ => NotFound(Json.obj("status" -> "Error insert 2"))
+    }
+
   }
 
   def getMedia(id: Long) = Action.async {

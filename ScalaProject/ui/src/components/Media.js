@@ -2,8 +2,9 @@ import React, {Component} from "react";
 import Button from 'react-bootstrap/Button'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
-const DEFAULT_PLACEHOLDER_IMAGE =
-    "./images/not-found.png";
+import notFound from "../images/not-found.png"
+
+const DEFAULT_PLACEHOLDER_IMAGE = {notFound};
 
 const MEDIAS_URL = "/api/medias/";
 const OMDB_URL = "/api/omdb/imdb/";
@@ -20,6 +21,7 @@ class Media extends Component {
             isAddedMedia: false,
             showDetails: false,
             mediaInfos: undefined
+
 
         };
 

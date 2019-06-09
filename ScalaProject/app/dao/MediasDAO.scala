@@ -71,6 +71,34 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
     db.run(insertQuery += media)
   }
 
+  /** Insert a new userMedia if not exists then return it. */
+  def insertIfNotExist(media: Media): Future[Option[Media]] = {
+
+    /*val exists = (for (m <- medias if m.imdbId === media.imdbId.bind) yield m).exists
+    val insertQuery = medias returning medias.map(_.id) into ((user, id) => user.copy(id))
+    for (m <- Query(insertQuery) if !exists) yield m*/
+
+    val a =
+      medias.filter(m => m.imdbId === media.imdbId ).exists.result.flatMap { exists =>
+        if (!exists) {
+          val med = Media(
+            None,
+            media.imdbId
+          )
+          medias += med
+
+        } else {
+          DBIO.successful(None) // no-op
+
+        }
+      }.transactionally
+
+    db.run(a)
+
+    findByImdbId(media.imdbId)
+
+  }
+
   /** Update a media, then return an integer that indicate if the media was found (1) or not (0). */
   def update(id: Long, media: Media): Future[Int] = {
     val mediaToUpdate: Media = media.copy(Some(id))
