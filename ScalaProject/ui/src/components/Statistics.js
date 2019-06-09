@@ -28,18 +28,10 @@ class Statistics extends Component {
 
     render() {
         return (
-        <nav className="navbar sticky-top navbar-expand-lg navbar-blue bg-blue">
-        <a className="navbar-brand" href="/"> Statistique pour Temps {this.state.statistic.duration} </a>
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
-        <div className="navbar-nav ml-auto">
-
-    </div>
-    </div>
-    </nav>
+            <div>
+                <h2>Statistique du mois :  </h2>
+                <h3> Temps de visionnage total à prévoir : {this.state.statistic.duration}  heures.</h3>
+            </div>
     )
 }
 }

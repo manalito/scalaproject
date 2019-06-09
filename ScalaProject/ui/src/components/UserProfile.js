@@ -2,29 +2,26 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router} from "react-router-dom";
 import Statistics from './Statistics'
 import Chart from "./Chart";
+import Cookies from 'js-cookie'
+
+const MEDIAS_API_URL = "/api/omdb/man"; // random URL for test
 
 const USERS_URL = "/api/users";
 const USER_URL = "/api/users";
 
 
-var user = {
-    basicInfo: {
-        name: "Aurelien",
-        gender: "Male",
-        birthday: "April 3, 1995",
-        location: "Switzerland",
-        photo: "http://lorempixel.com/500/500/people",
-        bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat fugit quia pariatur est saepe necessitatibus, quibusdam reiciendis ratione voluptate atque in qui provident rem repellat soluta. Blanditiis repellat velit eligendi."
-    }
-}
-
 class UserProfile extends Component {
 
     state = {
-        users: [ ]
-    };
-    state2 = {
-        user: ""
+        users: [ ],
+        userId: Cookies.get("walidb"),
+        user: {
+            username: null,
+            photo: "http://lorempixel.com/500/500/people",
+            stat: null,
+            bio: "I am a movies lover !",
+            listMediaId: []
+        }
     };
     /*componentDidMount() {
         fetch(USERS_URL)
@@ -38,13 +35,14 @@ class UserProfile extends Component {
     }*/
 
     componentDidMount() {
-        fetch(`${USERS_URL}`)
+        fetch(`${USERS_URL}/${this.state.userId}`)
             .then(response => response.json())
             .then(jsonResponse => {
                 console.log(jsonResponse);
-                this.setState({
-                    users: jsonResponse
-                })
+                this.setState(state => ({
+                    username: jsonResponse.username,
+                    stat: jsonResponse.stat
+                    }))
             })
     }
 
@@ -70,15 +68,21 @@ class UserProfile extends Component {
                         </div>
 
 
+                    <div className="container">
+                        <div id="user-profile">
+                            <h4>{this.state.user.username}</h4>
+                            <h4>{this.state.user.stat}</h4>
 
-                    <div id="user-profile">
-                        <MainPanel info={user.basicInfo} />
-                    </div>
-                    <div>
-                    <Statistics text={"hello"}/>
+                            <MainPanel info={this.state.user} />
+
+                        <div>
+                        <Statistics text={"hello"}/>
+                        </div>
                     </div>
                 </div>
-            </Router>
+        </div>
+
+        </Router>
 
         )
     }
@@ -116,8 +120,7 @@ class MainPanel extends React.Component {
         width={100}
         height={100}
         />
-        <h2>{info.name}</h2>
-        <h3>{info.location}</h3>
+        <h2>{info.username}</h2>
 
         <hr />
         <p>{info.gender} | {info.birthday}</p>

@@ -68,6 +68,19 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
       }
    }
 
+   def getUserById(userId: Int) = Action.async {
+      val optionalCourse = usersDAO.findById(userId)
+
+      optionalCourse.map {
+         case Some(c) => Ok(Json.toJson(c))
+         case None =>
+            NotFound(Json.obj(
+               "status" -> "Not Found",
+               "message" -> ("User #" + userId + " not found.")
+            ))
+      }
+   }
+
    def updateUser(userId: Long) = Action.async(validateJson[User]) { request =>
       val newUser = request.body
       usersDAO.update(userId, newUser).map {
