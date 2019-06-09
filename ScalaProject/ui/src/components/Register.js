@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
 
@@ -10,7 +11,8 @@ class Register extends Component {
             username: "",
             password: "",
             password2: "",
-            error: false
+            error: false,
+            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -42,7 +44,8 @@ class Register extends Component {
         })
         }).then(response =>
             this.setState({
-                error: !(response.status === 200)
+                error: !(response.status === 200),
+                redirect: response.status === 200
             })
     )
     }
@@ -52,7 +55,11 @@ class Register extends Component {
         let error_text = null
 
         if (this.state.error) {
-            error_text = <p className="error">Wrong password or invalid user</p>
+            error_text = <p className="error">User already exists</p>
+        }
+
+        if (this.state.redirect) {
+            return <Redirect to='/login' />
         }
 
         return (
