@@ -112,9 +112,9 @@
 }
 
 .search {
-    display: flex;
+
+    display: block;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
     margin-top: 10px;
 }
@@ -182,10 +182,8 @@ input[type="submit"]:hover {
 }
 
 .Search {
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    position: absolute;
+    position: center;
     display: flex;
     justify-content: center;
     pointer-events: none;
