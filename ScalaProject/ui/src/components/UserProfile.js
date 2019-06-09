@@ -3,28 +3,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Media from "./Media";
 import Cookies from 'universal-cookie';
 
-const MEDIAS_API_URL = "/api/omdb/imdb/ ";
+const MEDIAS_API_URL = "/api/omdb/imdb/";
 const USERS_URL = "/api/users";
 
 const cookies = new Cookies();
 
 class UserProfile extends Component {
-
-
-    fetchData = () => {
-        const urls = [
-          MEDIAS_API_URL + "tt0848228",
-          MEDIAS_API_URL + "tt0848228",
-          MEDIAS_API_URL + "tt0848228",
-          MEDIAS_API_URL + "tt0848228"
-        ];
-      
-        const allRequests = urls.map(url => 
-          fetch(url).then(response => response.json())
-        );
-      
-        return Promise.all(allRequests);
-      };
 
 
     state = {
@@ -35,11 +19,25 @@ class UserProfile extends Component {
         listMediaId: [],
         listMedias: []
     };
+
     constructor(props) {
         super(props);
 
 
     }
+
+    fetchData = () => {
+        const urls = this.state.listMediaId.map(mediaId => MEDIAS_API_URL + mediaId);
+      
+        const allRequests = urls.map(url => 
+          fetch(url).then(response => response.json())
+        );
+      
+        return Promise.all(allRequests);
+      };
+
+
+    
 
     /*componentDidMount() {
         fetch(USERS_URL)
@@ -62,31 +60,13 @@ class UserProfile extends Component {
         return results
     }*/
 
-    fct(tab) {
-        let results = []
-        tab.map(e => {
-            let x = fetch("/api/omdb/imdb/" + e).then(response => 
-                response.json().then(
-                    jsonResponse => 
-                    results.push(jsonResponse)
-                )
-            )
-        })
-        console.log(results);
-        return results
-    }
-
     componentDidMount() {
 
         /*this.setState(state => ({
             userId: cookies.get('phpMyAdmin')
         }));*/
 
-        this.fetchData().then(arrayOfResponses => 
-            this.setState({
-                listMedias : arrayOfResponses
-            })
-          );
+        
 
         console.log("Cookie value: " + this.state.userId);
 
@@ -99,24 +79,13 @@ class UserProfile extends Component {
                     listMediaId: jsonResponse.movieList,
                     runtime: jsonResponse.runtime
                 })
-            });
-        /*var promises = this.state.listMediaId.reverse().map(function (val, i) {
-            return fetch(MEDIAS_API_URL + val).then(function (result) {
-                console.log(result);
-                return result; // here, return whatever you want to be made available to the caller.
-            });
-        });*/
 
-        /*let results = [];
-        this.state.listMediaId.forEach(imdbId =>
-            fetch(`${MEDIAS_API_URL}/${imdbId}`)
-                .then(response => response.json())
-                .then(jsonResponse => {
-                    // do something with the data
-                    results.push(jsonResponse);
-                    console.log(jsonResponse)
-                }).then(console.log(results))
-        )*/
+                this.fetchData().then(arrayOfResponses => 
+                    this.setState({
+                        listMedias : arrayOfResponses
+                    })
+                  );
+            });
 
     }
 
@@ -124,26 +93,20 @@ class UserProfile extends Component {
 
 
     render() {
-        let testlist =  async => {
-            this.fct(this.state.listMediaId).then(medias => {
-    
-                return medias.map((media, index) => (
-                    <h2> {media.Title}</h2>
-                ))
-    
-            })
-        };
 
         const { users } = this.state;
 
-        const { username, runtime, listMediaId, listMedias } = this.state;
+        const { username, runtime, listMedias } = this.state;
 
         const mediaList = listMedias.length ? (
-            listMedias.map(media => {
-                return <div className="media" key={media.id}><p>Title: {media.Title} Id: {media.id}</p></div>
+            listMedias.map((media, index) => {
+                //return <div className="media" key={media.id}><p>Title: {media.Title} Id: {media.id}</p></div>
+                return <div className="container">
+                <Media key={`${index}-${media.Title}`} media={media}/>
+            </div>
             })
         ) : (
-                <div className="center">NO users yet</div>
+                <div className="center">No media yet</div>
             );
 
         const userList = users.length ? (
@@ -157,7 +120,6 @@ class UserProfile extends Component {
             <Router>
                 <div>
                     <h2>Welcome to your profile {}</h2>
-                    {testlist}
                     <div id="user-profile">
 
                         <div className="users">
@@ -167,8 +129,9 @@ class UserProfile extends Component {
 
                         </div>
 
-                        {mediaList}
+                        
                     </div>
+                    {mediaList}
                 </div>
 
             </Router>
