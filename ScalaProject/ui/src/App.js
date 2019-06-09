@@ -15,6 +15,7 @@ import Logo2 from "./components/Logo2";
 import Navbar from "./components/Navbar"
 import UserProfile from "./components/UserProfile"
 import Login from "./components/Login"
+import Register from "./components/Register"
 import Statistics from "./components/Statistics";
 
 
@@ -37,9 +38,8 @@ const App = () => {
                     <Route exact path='/' component={Home} />
                     <Route path='/profile' component={UserProfile} />
                     <Route path='/login' component={Login} />
-
+                    <Route path='/register' component={Register} />
                 </div>
-
             </Router>
         );
 

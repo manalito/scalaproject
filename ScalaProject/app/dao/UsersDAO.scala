@@ -19,12 +19,10 @@ trait UsersComponent {
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc) // Primary key, auto-incremented
     def username = column[String]("username")
     def password = column[String]("password")
-    def time_movies = column[Long]("time_movies")
-    def time_series = column[Long]("time_series")
-    def time_total = column[Long]("time_total")
-
+    def runtime = column[Long]("runtime")
+    
     // Map the attributes with the model; the ID is optional.
-    def * = (id.?, username, password, time_movies, time_series, time_total) <> (User.tupled, User.unapply)
+    def * = (id.?, username, password, runtime) <> (User.tupled, User.unapply)
   }
 
 }
@@ -93,9 +91,9 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     db.run(users.filter(_.id === id).delete)
 
   /** Authentication of a user when trying to log in**/
-  def authenticate(username: String, password: String): Future[Boolean] = {
-    //val query = users.filter(_.username == username).filter(_.password == password).result.headOption
-    val query = users.filter(u => u.username === username && u.password === password).exists.result
+  def authenticate(username: String, password: String): Future[Option[User]] = {
+    val query = users.filter(_.username === username).filter(_.password === password).result.headOption
+    //val query = users.filter(u => u.username === username && u.password === password).exists.result
     db.run(query)
   }
 }

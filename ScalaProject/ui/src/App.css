@@ -28,6 +28,20 @@
     cursor: pointer;
 }
 
+.Login {
+    text-align: center;
+    align-items: center;
+    width: 300px;
+    margin: auto;
+}
+
+.Register {
+    text-align: center;
+    align-items: center;
+    width: 300px;
+    margin: auto;
+}
+
 .spinner {
     height: 80px;
     margin: auto;
@@ -69,6 +83,7 @@
     background: #ddd;
     margin-bottom: 4px;
     border-radius: 10px;
+    text-align: center;
 }
 
 .App-header h2 {

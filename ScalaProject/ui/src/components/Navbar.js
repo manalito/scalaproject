@@ -12,8 +12,9 @@ const Navbar = (props) => {
             <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
                 <div className="navbar-nav ml-auto">
                     <Link to="/" className="nav-item nav-link active" >Home <span className="sr-only">(current)</span></Link>
-                    <NavLink to="/" className="nav-item nav-link" >Features</NavLink>
-                    <NavLink to="/profile" className="nav-item nav-link" >User Profile</NavLink>
+                    <NavLink to="/login" className="nav-item nav-link" >Login</NavLink>
+                    <NavLink to="/register" className="nav-item nav-link" >Register</NavLink>
+                    <NavLink to="/profile" className="nav-item nav-link" >Profile</NavLink>
                 </div>
             </div>
         </nav>

@@ -21,18 +21,14 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
       (JsPath \ "id").write[Option[Long]] and
          (JsPath \ "username").write[String] and
          (JsPath \ "password").write[String] and
-         (JsPath \ "time_movies").write[Long] and
-         (JsPath \ "time_series").write[Long] and
-         (JsPath \ "time_total").write[Long]
+         (JsPath \ "runtime").write[Long]
       ) (unlift(User.unapply))
 
    implicit val jsonToUser: Reads[User] = (
       (JsPath \ "id").readNullable[Long] and
          (JsPath \ "username").read[String](minLength[String](1) keepAnd maxLength[String](44)) and
          (JsPath \ "password").read[String] and
-         (JsPath \ "time_movies").read[Long] and
-         (JsPath \ "time_series").read[Long] and
-         (JsPath \ "time_total").read[Long]
+         (JsPath \ "runtime").read[Long]
       ) (User.apply _)
 
    def validateJson[A: Reads] = parse.json.validate(
