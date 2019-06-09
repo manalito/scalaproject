@@ -54,7 +54,7 @@ Voic ci dessous les différents framework, outils et langage de programmation en
 	- *Omdb Api*: api nous permettant de récupérer toutes les informations nécessaires sur les médias recherchés.
 
 
-### Manuel d'installation
+### Déploiement
 
 - Prérequis: Scala 2.12.x, Play 2.7, docker-compose, npm
 
