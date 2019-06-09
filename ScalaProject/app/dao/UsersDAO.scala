@@ -65,12 +65,11 @@ class UsersDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
     db.run(users.filter(_.username === username).result.headOption)
 
   /** Get the Medias associated with the given user's ID. */
-  def getMediasOfUser(id: Long): Future[Seq[Media]] = {
+  def getMediasOfUser(id: Long): Future[Seq[String]] = {
     val query = for {
-      userMedias <- usersMedias
+      userMedias <- usersMedias if userMedias.userId === id
       media <- medias if userMedias.mediaId === media.id
-    } yield media
-
+    } yield media.imdbId
     db.run(query.result)
   }
 

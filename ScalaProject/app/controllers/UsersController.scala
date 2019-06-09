@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{MediasDAO, UsersDAO}
+import dao.{MediasDAO, UsersDAO, UsersMediasDAO}
 import javax.inject.{Inject, Singleton}
 import models.User
 import play.api.libs.functional.syntax._
@@ -14,7 +14,7 @@ import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
 @Singleton
-class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, mediasDAO: MediasDAO, omdb: Omdb) extends AbstractController(cc) {
+class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, mediasDAO: MediasDAO, usersMediasDAO: UsersMediasDAO, omdb: Omdb) extends AbstractController(cc) {
 
    // Refer to the UsersController class in order to have more explanations.
    implicit val userToJson: Writes[User] = (
@@ -56,28 +56,17 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
    }
 
    def getUser(userId: Long) = Action.async {
-      val optionalCourse = usersDAO.findById(userId)
-
-      optionalCourse.map {
-         case Some(c) => Ok(Json.toJson(c))
-         case None =>
-            NotFound(Json.obj(
-               "status" -> "Not Found",
-               "message" -> ("User  not found.")
-            ))
-      }
-   }
-
-   def getUserById(userId: Int) = Action.async {
-      val optionalCourse = usersDAO.findById(userId)
-
-      optionalCourse.map {
-         case Some(c) => Ok(Json.toJson(c))
-         case None =>
-            NotFound(Json.obj(
-               "status" -> "Not Found",
-               "message" -> ("User #" + userId + " not found.")
-            ))
+      for {
+         userOption <- usersDAO.findById(userId)
+         movieSeq <- usersDAO.getMediasOfUser(userId)
+      } yield (userOption, movieSeq) match {
+         case (Some(user), _) =>
+            Ok(Json.obj(
+            "username" -> user.username,
+            "runtime" -> user.runtime,
+            "movieList" -> movieSeq
+         ))
+         case _ => NotFound
       }
    }
 
