@@ -21,7 +21,7 @@ class LoginController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ex
 
         usersDAO.authenticate(username,password).map {
           case Some(user) => user.id match {
-            case Some(id) => Ok.withCookies(Cookie("walidb", String.valueOf(id)))
+            case Some(id) => Ok.withCookies(Cookie("walidb", String.valueOf(id), httpOnly = false))
           }
           case None => Unauthorized
         }
