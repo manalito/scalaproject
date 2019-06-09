@@ -42,12 +42,6 @@ const Tech = ({ match }) => {
     return <div>Current Route: {match.params.tech}</div>
 };
 
-
-/*class App extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {title: ''};
-*/
 const Home = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 

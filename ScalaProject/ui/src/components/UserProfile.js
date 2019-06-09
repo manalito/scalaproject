@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import Media from "./Media";
-import Cookies from 'universal-cookie';
+import cookie from 'react-cookies';
 
 const MEDIAS_API_URL = "/api/omdb/imdb/";
 const USERS_URL = "/api/users";
-
-const cookies = new Cookies();
 
 class UserProfile extends Component {
 
 
     state = {
         users: [],
-        userId: 1,
+        userId: 0,
         username: null,
         runtime: 0,
         listMediaId: [],
-        listMedias: []
+        listMedias: [],
+        loaded: false
     };
 
     constructor(props) {
         super(props);
-
-
     }
 
     fetchData = () => {
@@ -36,41 +33,22 @@ class UserProfile extends Component {
         return Promise.all(allRequests);
       };
 
+      async updateUserIdFromCookie() {
+        this.setState({
+            userId : parseInt(cookie.load('walidb'))
+        })
+      }
 
-    
 
-    /*componentDidMount() {
-        fetch(USERS_URL)
-            .then(response => response.json())
-            .then(jsonResponse => {
-                console.log(jsonResponse);
-                this.setState({
-                    users: jsonResponse
-                })
-            })
-    }*/
 
-    /*fct(tab) {
-        let results = []
-        let z = tab.map(e => {
-            fetch("/api/omdb/imdb/" + e).then(t =>
-                results.push(t)
-            ).catch(e => console.log(e))
-        });
-        return results
-    }*/
 
     componentDidMount() {
 
-        /*this.setState(state => ({
-            userId: cookies.get('phpMyAdmin')
-        }));*/
+        /*this.setState({
+            userId : cookie.load('walidb')
+        })*/
 
-        
-
-        console.log("Cookie value: " + this.state.userId);
-
-        fetch(`${USERS_URL}/${this.state.userId}`)
+        /*fetch(`${USERS_URL}/${this.state.userId}`)
             .then(response => response.json())
             .then(jsonResponse => {
                 console.log(jsonResponse);
@@ -85,22 +63,58 @@ class UserProfile extends Component {
                         listMedias : arrayOfResponses
                     })
                   );
-            });
+            });*/
+        
 
     }
 
-   
+    componentDidUpdate(prevProps) {
+
+        if (this.state.userId == 0) {
+            this.setState({
+                userId: cookie.load('walidb')
+            })
+        } 
+        
+        if(!this.state.loaded){
+            fetch(`${USERS_URL}/${this.state.userId}`)
+            .then(response => response.json())
+            .then(jsonResponse => {
+                console.log(jsonResponse);
+                this.setState({
+                    username: jsonResponse.username,
+                    listMediaId: jsonResponse.movieList,
+                    runtime: jsonResponse.runtime
+                })
+
+                this.fetchData().then(arrayOfResponses =>
+                    this.setState({
+                        listMedias: arrayOfResponses,
+                        loaded: true
+                    })
+                );
+            });
+        }
+
+    }
 
 
     render() {
 
-        const { users } = this.state;
+        if (this.state.userId == 0) {
+            this.setState({
+                userId: cookie.load('walidb')
+            })
+        } 
+        console.log("Cookie value: " + this.state.userId);
 
+        
+
+        console.log(" THIS IS THE FUCKING COOKING: " + cookie.load('walidb'));
         const { username, runtime, listMedias } = this.state;
 
         const mediaList = listMedias.length ? (
             listMedias.map((media, index) => {
-                //return <div className="media" key={media.id}><p>Title: {media.Title} Id: {media.id}</p></div>
                 return <div className="container">
                 <Media key={`${index}-${media.Title}`} media={media}/>
             </div>
@@ -109,13 +123,13 @@ class UserProfile extends Component {
                 <div className="center">No media yet</div>
             );
 
-        const userList = users.length ? (
+       /* const userList = users.length ? (
             users.map(user => {
                 return <div className="user" key={user.id}><p>Username: {user.username} Id: {user.id}</p></div>
             })
         ) : (
                 <div className="center">NO users yet</div>
-            );
+        );*/
         return (
             <Router>
                 <div>
