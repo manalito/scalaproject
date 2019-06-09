@@ -18,3 +18,6 @@
 ### Priority 1
 - finir le contrôle de si l'utilisateur est dans la db avec l'authentification
 - fonctions `logout` in **LoginController**
+
+### Priority 2
+- hash Password
