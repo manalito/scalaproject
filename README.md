@@ -61,3 +61,21 @@ Voic ci dessous les différents framework, outils et langage de programmation en
 -  Koubaa Walid -> Frontend
 
   Bien évidemment des interactions entre les différents membres du groupe seront nécessaires pour lier les differentes parties.
+
+### Manuel d'installation
+
+- Prérequis:
+
+ -  docker-compose
+ -  Play 2.7
+ - 	Scala 2.12.x
+
+- Installation:
+ 
+ - Déployer la base de données en exécutant dans le dossier sql via le terminal la commande
+
+ 			docker-compose up
+ 		
+ - Importer le projet sur Intellij
+ - Attendre le lancement par Play de l'application (client et serveur)
+ - L'application est accessible via le navigateur en localhost sur le port 3000
