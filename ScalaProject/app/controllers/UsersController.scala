@@ -10,7 +10,7 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 import services.Omdb
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
 @Singleton
@@ -55,15 +55,15 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
       )
    }
 
-   def getUser(username: String) = Action.async {
-      val optionalCourse = usersDAO.findByUsername(username)
+   def getUser(userId: Long) = Action.async {
+      val optionalCourse = usersDAO.findById(userId)
 
       optionalCourse.map {
          case Some(c) => Ok(Json.toJson(c))
          case None =>
             NotFound(Json.obj(
                "status" -> "Not Found",
-               "message" -> ("User #" + username + " not found.")
+               "message" -> ("User  not found.")
             ))
       }
    }
@@ -101,13 +101,17 @@ class UsersController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO, me
 
    def getStatistics(userId: Long) = Action.async {
 
-      val list_time = scala.collection.mutable.ArrayBuffer.empty[Int]
-      usersDAO.getMediasOfUser(userId).map(medias =>
-         medias.map(m =>
-            omdb.getMediaDuration(m.imdbId
-            ).map(t => list_time += t)
-         )
-      )
-      Future { Ok(Json.obj("duration" -> list_time.sum))}
+      usersDAO.findById(userId).map{
+         case Some(user) => Ok(Json.obj("runetime" -> user.runtime))
+         case _ => NotFound
+      }
+   }
+
+   def listMedias(userId: Long) = Action.async {
+      for {
+         u <- usersDAO.getMediasOfUser(userId)
+      } yield u
+
+      Future {Ok}
    }
 }

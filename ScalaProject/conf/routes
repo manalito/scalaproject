@@ -12,9 +12,7 @@ GET     /api/summary                    controllers.HomeController.appSummary
 # Serve static assets under public directory
 #GET     /*file                         controllers.HomeController.assetOrDefault(file)
 GET     /api/users                      controllers.UsersController.getUsers
-GET     /api/users/:username            controllers.UsersController.getUser(username: String)
-GET     /api/users/statistics/:userId   controllers.UsersController.getStatistics(userId:Long)
-GET     /api/users/:username/medias      controllers.UsersController.get
+GET     /api/users/:userId              controllers.UsersController.getUser(userId: Long)
 
 GET     /api/medias                     controllers.MediasController.getMedias
 POST    /api/medias/                    controllers.MediasController.createMedia

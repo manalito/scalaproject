@@ -20,7 +20,7 @@ trait UsersComponent {
     def username = column[String]("username")
     def password = column[String]("password")
     def runtime = column[Long]("runtime")
-    
+
     // Map the attributes with the model; the ID is optional.
     def * = (id.?, username, password, runtime) <> (User.tupled, User.unapply)
   }

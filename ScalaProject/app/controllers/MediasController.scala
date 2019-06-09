@@ -7,7 +7,7 @@ import play.api.db
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
-import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.mvc.{AbstractController, Action, ControllerComponents}
 import services.Omdb
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -32,41 +32,10 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
   )
 
   def getMedias = Action.async {
+
     val mediasList = mediasDAO.list()
     mediasList map (c => Ok(Json.toJson(c)))
   }
-
-  /*def createMedia = Action.async(validateJson[Media]) { request =>
-    val media = request.body
-    val userId = request.cookies.get("walidb") match {
-      case Some(x) => java.lang.Long.valueOf(x.value)
-    }
-
-    val mediaId = mediasDAO.findByImdbId(media.imdbId).map{
-      case Some(m) => m.id match {
-        case Some(id) => conditionalUserMediaInsert(userId, id)
-      }
-      case _ => mediasDAO.insert(media).map(m => m.id match {
-          case Some(id) => conditionalUserMediaInsert(userId, id)
-      })
-    }
-
-    mediaId.map(c =>
-      Ok(
-        Json.obj(
-          "status" -> "OK",
-          "id" -> c.toString
-        )
-      )
-    )
-  }
-
-  def conditionalUserMediaInsert(userId: Long, mediaId: Long): Future[Future[UserMedia]] = {
-    usersMediasDAO.findByUserMediaId(userId, mediaId).map(userMedia => userMedia match {
-      case None => usersMediasDAO.insert(UserMedia(None, userId, mediaId))
-    })
-  }*/
-
 
   def createMedia = Action.async(validateJson[Media]) { request =>
     val media = request.body
