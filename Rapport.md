@@ -5,19 +5,19 @@
 
 ## Concept
 
-Notre but est d'offrir une application permettant de rechercher des films et de garder une trace sur les médias déjà visionnées. Ainsi un utilisateur peut se créer un compte en choisissant un pseudo et mot de passe pour ensuite se log sur le site. Il peut ensuite rechercher des films qui l'intéresse et les ajouter à sa liste lorsqu'il les a visionné.
+Notre but est d'offrir une application permettant de rechercher des films et de garder une trace sur les médias déjà visionnés. Ainsi un utilisateur peut se créer un compte en choisissant un pseudo et mot de passe pour ensuite se loguer sur le site. Il peut ensuite rechercher des films qui l'intéresse et les ajouter à sa liste lorsqu'il les a visionnés.
 
-Le profile d'un utilisateur est accessible publiquement et montre les média déjà regardés ainsi que des statistiques montrant par exemple le nombre d'heures passées à visionner sa collection de films.
+Le profil d'un utilisateur est accessible publiquement et montre les médias déjà regardés ainsi que des statistiques montrant par exemple le nombre d'heures passées à visionner sa collection de films.
 
 ## Aperçu visuel
 
 ### Page d'accueil
 
-![alt](img/Home.png)
+![alt](img/home.png)
 
 ### Page de register
 
-![alt](img/Register.png)
+![alt](img/register.png)
 
 Une fois l'enregistrement auprès de WaliDB effectué, on est redirigé vers la page de login pour s'authentifier.
 
@@ -27,7 +27,7 @@ La page de profil contient les informations de l'utilisateur connecté ainsi que
 
 ## Choix des technologie
 
-Le backend est écrit en Scala en utilisant le **framework Play 2.7.** Nous avons choisi une base de donnée **MySQL** que nous accédons avec **Slick**. Cette base de donnée tourne sur un **docker** que nous lançons avec *docker-compose*. Enfin le frontend a été fait en **React**, une technologie que nous trouvons agréable à utiliser et qui offre des très bonnes performances.
+Le backend est écrit en Scala en utilisant le **framework Play 2.7.** Nous avons choisit une base de donnée **MySQL** que nous accédons avec **Slick**. Cette base de donnée tourne sur un **Docker** que nous lançons avec *docker-compose*. Enfin le frontend a été fait en **React**, une technologie que nous trouvons agréable à utiliser et qui offre des très bonnes performances.
 
 ## Implémentation
 
