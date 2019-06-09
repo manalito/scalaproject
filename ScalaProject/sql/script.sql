@@ -26,9 +26,7 @@ CREATE TABLE `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` longtext NOT NULL,
-  `time_movies` bigint DEFAULT 0,
-  `time_series` bigint DEFAULT 0,
-  `time_total` bigint DEFAULT 0,
+  `runtime` bigint DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -39,7 +37,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'testuser','password',0,0,0),(2,'testuser2','password2',0,0,0);
+INSERT INTO `User` VALUES (1,'testuser','password',157),(2,'testuser2','password2',0);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
