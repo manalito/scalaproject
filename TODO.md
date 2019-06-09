@@ -1,14 +1,31 @@
-- Frontend 
-  - Page statistiques - 
-  - Page register 
-    - Auteur - résumé - acteurs
-  - manage movie image when forbidden
-  - Ajouter route login/logout
-- Backend 
-  - refactor FrontendController in HomeController
+# TODO List: ScalaProject
 
-Popular movie:
-- Harry Potter
+## Frontend 
+### Priority 1
+- Page profile: afficher les médias appartenant à l'utilisateur
+- Page register
+- Redirections:
+  	- vers page login si non authentifié
+  	- vers la page principale lorsque l'utilisateur est authentifié
+ - Liens: 
+ 	- si non authentifié: *register*, *login*
+ 	- si authentifié *logout* 
+### Priority 2
+ - manage movie image when forbidden
+
+## Backend 
+
+### Priority 1
+- finir le contrôle de si l'utilisateur est dans la db avec l'authentification
+- fonctions `register` et `logout` in **LoginController**
+- refactor **FrontendController** in **HomeController**
+
+### Priority 2
+
+- Pour la page principale: sélection random sur une liste de médias populaires
+#### Popular movie:
+
+- Harry Potter: potter
 - Avenger
 - Indiana Jones
 - Batman
