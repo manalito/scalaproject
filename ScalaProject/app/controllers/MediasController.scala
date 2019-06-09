@@ -27,6 +27,9 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     (JsPath \ "imdb_id").read[String] (minLength[String](9) keepAnd maxLength[String](11))
   )(Media.apply _)
 
+  val keywordsPopularMovies = Array("harry", "avenger", "jones", "man", "bourne", "fast",
+    "die", "evil", "matrix", "terminator", "pirate", "mission")
+
   def validateJson[A : Reads] = parse.json.validate(
     _.validate[A].asEither.left.map(e => BadRequest(JsError.toJson(e)))
   )
@@ -111,5 +114,9 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     }
   }
 
-
+  def randomMedias = Action.async {
+    val index = scala.util.Random.nextInt(keywordsPopularMovies.length)
+    omdb.searchMedia(keywordsPopularMovies(index)).map(movies =>
+    Ok(Json.parse(movies)))
+  }
 }

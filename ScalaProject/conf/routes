@@ -20,6 +20,7 @@ DELETE  /api/medias/:imdbId             controllers.MediasController.deleteMedia
 
 GET     /api/omdb/:search               controllers.MediasController.searchMedia(search: String)
 GET     /api/omdb/imdb/:imdbId          controllers.MediasController.requestMedia(imdbId: String)
+GET     /api/omdb/random/gen            controllers.MediasController.randomMedias
 
 POST    /api/login                      controllers.LoginController.login
 POST    /api/register                   controllers.LoginController.register

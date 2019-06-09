@@ -3,7 +3,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Search from "./Search";
 import Media from "./Media";
 
-const MEDIAS_API_URL = "/api/omdb/man"; // random URL for test
+const MEDIAS_API_URL = "/api/omdb/random/gen"; // random URL for test
 
 const initialState = {
     loading: true,
