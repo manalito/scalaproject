@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Redirect } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 class Login extends Component {
 
@@ -9,7 +11,8 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            error: false
+            error: false,
+            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -22,6 +25,18 @@ class Login extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/' />
+        }
     }
 
     handleSubmit(event) {
@@ -38,7 +53,8 @@ class Login extends Component {
         })
         }).then(response =>
             this.setState({
-                error: !(response.status === 200)
+                error: !(response.status === 200),
+                redirect : !(response.status === 401)
             })
     )
     }
@@ -51,8 +67,15 @@ class Login extends Component {
             error_text = <p className="error">Wrong password or invalid user</p>
         }
 
+        // if cookie returns a username
+
+
+
+
         return (
-            <div className="container">
+
+        <div className="container">
+            {this.renderRedirect()}
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="username" bsSize="large">

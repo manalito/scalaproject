@@ -23,7 +23,7 @@ class LoginController @Inject()(cc: ControllerComponents, usersDAO: UsersDAO) ex
           case Some(user) => user.id match {
             case Some(id) => Ok.withCookies(Cookie("walidb", String.valueOf(id)))
           }
-          case None => NotFound
+          case None => Unauthorized
         }
     }
 
