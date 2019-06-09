@@ -34,7 +34,7 @@ const App = () => {
             <Router>
                 <div className="App">
                     <Logo2/>
-                    <Navbar text="ScaleMedia" />
+                    <Navbar component={Navbar} />
                     <Route exact path='/' component={Home} />
                     <Route path='/profile' component={UserProfile} />
                     <Route path='/login' component={Login} />

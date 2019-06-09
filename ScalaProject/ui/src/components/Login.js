@@ -64,13 +64,8 @@ class Login extends Component {
         let error_text = null
 
         if (this.state.error) {
-            error_text = <p className="error">Wrong password or invalid user</p>
+            error_text = <p className="errorMessage">Wrong password or invalid user</p>
         }
-
-        // if cookie returns a username
-
-
-
 
         return (
 

@@ -55,7 +55,7 @@ class Register extends Component {
         let error_text = null
 
         if (this.state.error) {
-            error_text = <p className="error">User already exists</p>
+            error_text = <p className="errorMessage">User already exists</p>
         }
 
         if (this.state.redirect) {
