@@ -4,8 +4,8 @@ import javax.inject.{Inject, Singleton}
 import models.Media
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 // We use a trait component here in order to share the MediasTable class with other DAO, thanks to the inheritance.
 trait MediasComponent {
@@ -92,8 +92,8 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
 
         }
       }.transactionally
-
-    db.run(a)
+    // TODO better handling of asynchronism
+    Await.result(db.run(a), 50 milliseconds)
     findByImdbId(media.imdbId)
 
   }
