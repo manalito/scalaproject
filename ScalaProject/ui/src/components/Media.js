@@ -57,7 +57,10 @@ class Media extends Component {
                     }));
 
                     // add new imdbID to imdbArray
-                    let imdbArray = cookie.load('imdbArray');
+                    let imdbArray = cookie.load('imdbArray')
+                    if(imdbArray === undefined){
+                        imdbArray = [];
+                    }
                     imdbArray.push(this.props.imdbID);
                     cookie.save('imdbArray', JSON.stringify(imdbArray));
                 })
