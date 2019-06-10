@@ -19,6 +19,7 @@ class Navbar extends Component {
     logout(e) {
         //e.preventDefault();
         cookie.remove('walidb')
+        cookie.remove('imdbArray')
         this.setState = {
             username: "",
             logged: false,
@@ -79,8 +80,7 @@ class Navbar extends Component {
                     <Link to="/" className="nav-item nav-link active" >Home <span className="sr-only">(current)</span></Link>
                     {!this.state.logged ? <NavLink to="/login" className="nav-item nav-link" >Login</NavLink> :
                  <NavLink to="/" className="nav-item nav-link" onClick={e => this.logout(e)}>Logout</NavLink>}
-                 {this.state.logged ? "" : <NavLink to="/register" className="nav-item nav-link" >Register</NavLink>}
-                    <NavLink to="/profile" className="nav-item nav-link" >Profile</NavLink>
+                 {this.state.logged ? <NavLink to="/profile" className="nav-item nav-link" >Profile</NavLink> : <NavLink to="/register" className="nav-item nav-link" >Register</NavLink>}
 
         </div>
             </div>
