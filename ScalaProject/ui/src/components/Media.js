@@ -111,13 +111,6 @@ class Media extends Component {
 
     render () {
 
-        if(!this.state.isAddedMedia && (this.state.userId === 0 ||  this.state.userId === undefined)){
-            this.setState({
-                isAddedMedia: cookie.load('imdbArray').includes(this.props.media.imdbID)
-            })
-            
-        }
-
 
 
         if (this.state.userId === 0) {
@@ -127,6 +120,14 @@ class Media extends Component {
                 showAddButton: userId !== undefined
             })
         } 
+        if (!this.state.isAddedMedia && (this.state.userId === 0 || this.state.userId === undefined)) {
+            if (cookie.load('imdbArray') !== undefined) {
+                this.setState({
+                    isAddedMedia: cookie.load('imdbArray').includes(this.props.media.imdbID)
+                })
+            }
+
+        }
         const media = this.props.media;
         const poster = media.Poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : media.Poster;
         const { mediaInfos } = this.state;
