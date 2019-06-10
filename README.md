@@ -56,10 +56,9 @@ Voic ci dessous les différents framework, outils et langage de programmation en
 
 ### Déploiement
 
-- Prérequis: Scala 2.12.x, Play 2.7, docker-compose, npm
+- Prérequis: Scala 2.12.x, Play 2.7, docker-compose, npm, IntelliJ
 
 - Installation: 
-1) Déployer la base de données en exécutant dans le dossier sql via le terminal la commande `docker-compose up`
-2) Effectuer `npm install` dans le dossier ui
-3) Importer le projet sur Intellij et lancer l'application
-4) L'application est accessible via le navigateur en localhost sur le port 3000
+1) Déployer la base de données en exécutant dans le dossier sql la commande `docker-compose up`
+2) Importer le projet sur Intellij et lancer l'application
+3) L'application est accessible via le navigateur sur localhost port 3000
