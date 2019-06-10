@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{MediasDAO, UsersMediasDAO}
+import dao.{MediasDAO, UsersDAO, UsersMediasDAO}
 import javax.inject.{Inject, Singleton}
 import models._
 import play.api.db
@@ -9,13 +9,15 @@ import play.api.libs.json.Reads._
 import play.api.libs.json._
 import play.api.mvc.{AbstractController, Action, ControllerComponents}
 import services.Omdb
+import play.api.Logger
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, usersMediasDAO: UsersMediasDAO, omdb: Omdb) extends AbstractController(cc) {
+class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO, usersMediasDAO: UsersMediasDAO, usersDAO: UsersDAO, omdb: Omdb) extends AbstractController(cc) {
 
+  val logger: Logger = Logger(getClass)
   // Refer to the MediasController class in order to have more explanations.
   implicit val mediaToJson: Writes[Media] = (
     (JsPath \ "id").write[Option[Long]] and
@@ -45,6 +47,9 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     val userId = request.cookies.get("walidb") match {
       case Some(x) => java.lang.Long.valueOf(x.value)
     }
+
+    //update user runtime
+    updateUserRuntime(media.imdbId, userId, true)
 
     mediasDAO.insertIfNotExist(media).map {
       case Some(m) => m.id match {
@@ -87,7 +92,13 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     }
   }
 
-  def deleteMedia(mediaId: String) = Action.async {
+  def deleteMedia(mediaId: String) = Action.async { request =>
+
+    val userId = request.cookies.get("walidb") match {
+      case Some(x) => java.lang.Long.valueOf(x.value)
+    }
+    updateUserRuntime(mediaId, userId, false)
+
     mediasDAO.delete(mediaId).map {
       case 1 => Ok(
         Json.obj(
@@ -118,5 +129,18 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
     val index = scala.util.Random.nextInt(keywordsPopularMovies.length)
     omdb.searchMedia(keywordsPopularMovies(index)).map(movies =>
     Ok(Json.parse(movies)))
+  }
+
+  def updateUserRuntime(mediaId: String, userId: Long, add: Boolean) = {
+    omdb.getMediaDuration(mediaId).map(duration => {
+      usersDAO.findById(userId).map {
+        case Some(user) =>{
+          add match {
+            case true => usersDAO.update(userId, User(Some(userId), user.username, user.password, user.runtime + duration))
+            case false => usersDAO.update(userId, User(Some(userId), user.username, user.password, user.runtime - duration))
+          }
+        }
+      }
+    })
   }
 }

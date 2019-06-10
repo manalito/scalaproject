@@ -97,6 +97,10 @@ class UserProfile extends Component {
 
     }
 
+    convertTime(time) {
+        return Math.floor(time/60) + ' hours ' + time%60 + ' minutes'
+    }
+
 
     render() {
 
@@ -135,7 +139,7 @@ class UserProfile extends Component {
                         <div className="users">
                             <h4>{username}</h4>
 
-                            <h4>This is your stat: {runtime} !!!</h4>
+                            <h4>Time spent: {this.convertTime(runtime)}</h4>
 
                         </div>
 

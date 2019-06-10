@@ -14,6 +14,7 @@ import play.api.libs.json._
 import play.api.libs.ws
 import play.api.libs.ws.WSClient
 import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.Logger
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -21,6 +22,7 @@ import scala.concurrent.Future
 @Singleton
 class Omdb @Inject() (ws: WSClient) {
    val url = "https://www.omdbapi.com/?apikey=f59fab75&type=movie"
+   val logger: Logger = Logger(getClass)
 
    // TODO use futur to manage timeout
    //def searchMedia(media: String): Future[String] = scala.io.Source.fromURL(url + "&s=" + media)
@@ -39,7 +41,7 @@ class Omdb @Inject() (ws: WSClient) {
 
    def getMediaDuration(mediaId: String): Future[Int] = {
       ws.url(url + "&i=" + mediaId).get().map { response =>
-         Integer.valueOf((Json.parse(response.body) \ "Runtime").toString.split(' ')(0))
+         Integer.valueOf((Json.parse(response.body) \ "Runtime").as[String].split(' ')(0))
       }
    }
 }

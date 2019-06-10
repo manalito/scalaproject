@@ -79,7 +79,7 @@ class Navbar extends Component {
                 <div className="navbar-nav ml-auto">
                     <Link to="/" className="nav-item nav-link active" >Home <span className="sr-only">(current)</span></Link>
                     {!this.state.logged ? <NavLink to="/login" className="nav-item nav-link" >Login</NavLink> :
-                 <NavLink to="/" className="nav-item nav-link" onClick={e => this.logout(e)}>Logout</NavLink>}
+                 <Link to="/" className="nav-item nav-link" onClick={e => this.logout(e)}>Logout</Link>}
                  {this.state.logged ? <NavLink to="/profile" className="nav-item nav-link" >Profile</NavLink> : <NavLink to="/register" className="nav-item nav-link" >Register</NavLink>}
 
         </div>

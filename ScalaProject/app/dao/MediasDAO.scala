@@ -94,7 +94,6 @@ class MediasDAO @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
       }.transactionally
 
     db.run(a)
-
     findByImdbId(media.imdbId)
 
   }
