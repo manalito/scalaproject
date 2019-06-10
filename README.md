@@ -54,10 +54,12 @@ Voic ci dessous les différents framework, outils et langage de programmation en
 	- *Omdb Api*: api nous permettant de récupérer toutes les informations nécessaires sur les médias recherchés.
 
 
-### Répartition des tâches
+### Déploiement
 
-- Gallay Romain, Siu Aurélien -> Backend
+- Prérequis: Scala 2.12.x, Play 2.7, docker-compose, npm
 
--  Koubaa Walid -> Frontend
-
-  Bien évidemment des interactions entre les différents membres du groupe seront nécessaires pour lier les differentes parties.
+- Installation: 
+1) Déployer la base de données en exécutant dans le dossier sql via le terminal la commande `docker-compose up`
+2) Effectuer `npm install` dans le dossier ui
+3) Importer le projet sur Intellij et lancer l'application
+4) L'application est accessible via le navigateur en localhost sur le port 3000
