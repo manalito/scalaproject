@@ -33,13 +33,6 @@ class UserProfile extends Component {
         return Promise.all(allRequests);
       };
 
-      async updateUserIdFromCookie() {
-        this.setState({
-            userId : parseInt(cookie.load('walidb'))
-        })
-      }
-
-
 
 
     componentDidMount() {
@@ -70,11 +63,16 @@ class UserProfile extends Component {
 
     componentDidUpdate(prevProps) {
 
+        if (this.state.userId === undefined || this.state.userId === 0 ) {
+            this.setState({
+                userId: cookie.load('walidb')
+            })
+        } /*
         if (this.state.userId == 0) {
             this.setState({
                 userId: cookie.load('walidb')
             })
-        } 
+        } */
         
         if(!this.state.loaded){
             fetch(`${USERS_URL}/${this.state.userId}`)
@@ -91,7 +89,8 @@ class UserProfile extends Component {
                     this.setState({
                         listMedias: arrayOfResponses,
                         loaded: true
-                    })
+                    }),
+                    cookie.save('imdbArray', JSON.stringify(this.state.listMediaId))
                 );
             });
         }
@@ -101,16 +100,13 @@ class UserProfile extends Component {
 
     render() {
 
-        if (this.state.userId == 0) {
+        if (this.state.userId === undefined || this.state.userId === 0 ) {
             this.setState({
                 userId: cookie.load('walidb')
             })
         } 
         console.log("Cookie value: " + this.state.userId);
 
-        
-
-        console.log(" THIS IS THE FUCKING COOKING: " + cookie.load('walidb'));
         const { username, runtime, listMedias } = this.state;
 
         const mediaList = listMedias.length ? (

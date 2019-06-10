@@ -15,7 +15,7 @@ GET     /api/users                      controllers.UsersController.getUsers
 GET     /api/users/:userId              controllers.UsersController.getUser(userId: Long)
 
 GET     /api/medias                     controllers.MediasController.getMedias
-POST    /api/medias/                    controllers.MediasController.createMedia
+POST    /api/medias/                     controllers.MediasController.createMedia
 DELETE  /api/medias/:imdbId             controllers.MediasController.deleteMedia(imdbId: String)
 
 GET     /api/omdb/:search               controllers.MediasController.searchMedia(search: String)

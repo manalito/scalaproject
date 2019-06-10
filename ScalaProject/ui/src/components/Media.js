@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
 import notFound from "../images/not-found.png"
+import cookie from "react-cookies";
 
 const DEFAULT_PLACEHOLDER_IMAGE = {notFound};
 
@@ -20,7 +21,9 @@ class Media extends Component {
         this.state = {
             isAddedMedia: false,
             showDetails: false,
-            mediaInfos: undefined
+            mediaInfos: undefined,
+            showAddButton: false,
+            userId: 0
 
 
         };
@@ -30,6 +33,8 @@ class Media extends Component {
         // This binding is necessary to make `this` work in the callback
         this.handleShowDetails = this.handleShowDetails.bind(this);
     }
+
+
 
     handleAddMedia() {
 
@@ -50,6 +55,11 @@ class Media extends Component {
                     this.setState(state => ({
                         isAddedMedia: !state.isAddedMedia
                     }));
+
+                    // add new imdbID to imdbArray
+                    let imdbArray = cookie.load('imdbArray');
+                    imdbArray.push(this.props.imdbID);
+                    cookie.save('imdbArray', JSON.stringify(imdbArray));
                 })
 
         } else { // remove media from local db
@@ -65,6 +75,11 @@ class Media extends Component {
                     this.setState(state => ({
                         isAddedMedia: !state.isAddedMedia
                     }));
+
+                    // remove new imdbID to imdbArray
+                    let imdbArray = cookie.load('imdbArray');
+                    imdbArray.remove(this.props.imdbID);
+                    cookie.save('imdbArray', JSON.stringify(imdbArray));
                 })
         }
 
@@ -82,8 +97,8 @@ class Media extends Component {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })  .then(response => response.json())
-                .then(jsonResponse => {
+            }).then(response => response.json())
+              .then(jsonResponse => {
                     console.log(jsonResponse);
                     this.setState(state => ({
                         showDetails: !state.showDetails,
@@ -94,8 +109,24 @@ class Media extends Component {
     }
 
 
-    render ()
-        {
+    render () {
+
+        if(!this.state.isAddedMedia && (this.state.userId === 0 ||  this.state.userId === undefined)){
+            this.setState({
+                isAddedMedia: cookie.load('imdbArray').includes(this.props.media.imdbID)
+            })
+            
+        }
+
+
+
+        if (this.state.userId === 0) {
+            const userId = cookie.load('walidb');
+            this.setState({
+                userId: userId,
+                showAddButton: userId !== undefined
+            })
+        } 
         const media = this.props.media;
         const poster = media.Poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : media.Poster;
         const { mediaInfos } = this.state;
@@ -132,11 +163,17 @@ class Media extends Component {
                 
                 <ButtonToolbar>
                     <Button variant="primary" as="input" type="button" value={this.state.showDetails ? 'less details' : 'more details'} onClick={this.handleShowDetails}/>
-                    <Button  variant="primary" as="input" type="button" value={this.state.isAddedMedia ? 'media added' : 'add media'} onClick={this.handleAddMedia}/>
+                    
+                    {this.state.showAddButton ? 
+                        <Button  variant="primary" as="input" type="button" value={this.state.isAddedMedia ? 'remove media' : 'add media'} onClick={this.handleAddMedia}/>
+                     : null}
+                    
+                    
                 </ButtonToolbar>
             </div>
         </div>)
     }
 }
 
+// <Button  variant="primary" as="input" type="button" value={this.state.isAddedMedia ? 'media added' : 'add media'} onClick={this.handleAddMedia}/>
 export default Media;

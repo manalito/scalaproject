@@ -50,9 +50,9 @@ class MediasController @Inject()(cc: ControllerComponents, mediasDAO: MediasDAO,
       case Some(m) => m.id match {
         case Some(id) => usersMediasDAO.insertIfNotExist(UserMedia(None, userId, id))
           Ok(Json.obj("status" -> "OK"))
-        case _ => NotFound(Json.obj("status" -> "Error insert 1"))
+        case _ => NotFound(Json.obj("status" -> "Error insert in Media table"))
       }
-      case _ => NotFound(Json.obj("status" -> "Error insert 2"))
+      case _ => NotFound(Json.obj("status" -> "Error insert in UserMedia table"))
     }
 
   }
